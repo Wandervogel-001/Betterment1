@@ -1,0 +1,8 @@
+discord.py==2.5.2
+Flask==3.1.1
+huggingface_hub==0.33.2
+motor==3.7.1
+numpy==2.3.2
+python-dotenv==1.1.1
+sentence_transformers==5.0.0
+tenacity==8.5.0

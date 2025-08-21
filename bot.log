@@ -1,0 +1,508 @@
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 9dff88e379aec93c3de849bce7c3c76c).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Successfully deleted team 'Team 3' and its resources.
+Error in 'Reflect & Form Teams' button: 'TeamsCog' object has no attribute '_build_reflection_embed'
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\ui\buttons.py", line 156, in callback
+    embed = self.cog._build_reflection_embed(report)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TeamsCog' object has no attribute '_build_reflection_embed'
+Error in 'Fetch Data' button: 'coroutine' object is not subscriptable
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\ui\buttons.py", line 180, in callback
+    value=str(results['registered']),
+              ~~~~~~~^^^^^^^^^^^^^^
+TypeError: 'coroutine' object is not subscriptable
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: ae3fe00c349c819f11402240d86cdb33).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+An unhandled command error occurred in TeamsCog: Command 'add_members' raised an exception: ValueError: not enough values to unpack (expected 4, got 3)
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\permissions.py", line 69, in wrapper
+    return await func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\cog.py", line 137, in add_members
+    added_members, existing_members, invalid_members, in_other_teams = await self.team_manager.add_members_to_team(
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 4, got 3)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'add_members' raised an exception: ValueError: not enough values to unpack (expected 4, got 3)
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 3ac0aa40f2a4e6296c45501a859802e0).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: e1b5a676e5d0e62b056e7194791bb68b).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: ec42e52a8df554a4e6b8bd4422433669).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Ignoring exception in view <UnregisteredMemberDropdownView timeout=180 children=1> for item <UnregisteredMemberDropdown placeholder='Select an unassigned member...' min_values=1 max_values=1 disabled=False>
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ui\view.py", line 435, in _scheduled_task
+    await item.callback(interaction)
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\ui\views.py", line 147, in callback
+    member_profile = await self.cog.team_manager.member_service.get_unassigned_member_profile(interaction.guild_id, selected_user_id)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TeamMemberService' object has no attribute 'get_unassigned_member_profile'
+==================================================
+🚀 STARTING HIERARCHICAL TEAM FORMATION
+==================================================
+🌱 Initializing with 0 leaders and 3 members.
+Phase 1: Clustering members by timezone...
+-> Found 1 distinct timezone groups.
+Phase 2: Clustering by category...
+🎯 Initial Clustering Complete: 0 teams created, 3 members initially unassigned.
+Phase 4: Reassigning 3 orphaned members...
+🤝 Orphan Reassignment Complete: 0 members placed. 3 remain unassigned.
+🚨 Final Unassigned Members: ['Luna', '𝐑 𝐘 𝐎', 'Lotus 🪷']
+==================================================
+✅ TEAM FORMATION PROCESS COMPLETE
+==================================================
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: bfeacbf9a601a44341e5a7ea7f42647a).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Ignoring exception in view <TeamRecommendationView timeout=180 children=1> for item <TeamRecommendationDropdown placeholder='Choose a team to assign the member to...' min_values=1 max_values=1 disabled=True>
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ui\view.py", line 435, in _scheduled_task
+    await item.callback(interaction)
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\ui\views.py", line 193, in callback
+    await self.cog.panel_manager.refrech_team_panel(interaction.guild.id)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'PanelManager' object has no attribute 'refrech_team_panel'. Did you mean: 'refresh_team_panel'?
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 238c7c3e0f087d52cdbe5103a1b4c7dd).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 54876dd59d9f63841cc2ca9d531965db).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+Failed to load cog cogs.teams.cog: Extension 'cogs.teams.cog' raised an error: ImportError: cannot import name 'is_marathon_active' from 'cogs.teams.services.team_service' (d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_service.py)
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ext\commands\bot.py", line 951, in _load_from_module_spec
+    spec.loader.exec_module(lib)  # type: ignore
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\cog.py", line 7, in <module>
+    from .services.team_manager import TeamManager
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_manager.py", line 11, in <module>
+    from ..services.team_formation_service import TeamFormationService
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_formation_service.py", line 6, in <module>
+    from .team_service import is_marathon_active
+ImportError: cannot import name 'is_marathon_active' from 'cogs.teams.services.team_service' (d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_service.py)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\main.py", line 56, in load_cogs
+    await bot.load_extension(cog_name)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ext\commands\bot.py", line 1029, in load_extension
+    await self._load_from_module_spec(spec, name)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ext\commands\bot.py", line 954, in _load_from_module_spec
+    raise errors.ExtensionFailed(key, e) from e
+discord.ext.commands.errors.ExtensionFailed: Extension 'cogs.teams.cog' raised an error: ImportError: cannot import name 'is_marathon_active' from 'cogs.teams.services.team_service' (d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_service.py)
+Connected to 1 guilds
+Synced 0 global commands
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 1ef7f7cd23de1c16e560750095fe7fef).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+==================================================
+🚀 STARTING HIERARCHICAL TEAM FORMATION
+==================================================
+🌱 Initializing with 1 leaders and 4 members.
+Phase 1: Clustering members by timezone...
+-> Found 1 distinct timezone groups.
+Phase 2: Clustering by category...
+🎯 Initial Clustering Complete: 1 teams created, 4 members initially unassigned.
+Phase 4: Reassigning 4 orphaned members...
+🤝 Orphan Reassignment Complete: 4 members placed. 0 remain unassigned.
+==================================================
+✅ TEAM FORMATION PROCESS COMPLETE
+==================================================
+Could not find role 'Team 2' to deprovision.
+Successfully deleted team 'Team 2' and its resources.
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 7f4a984b5804dacf714275b9590f64d0).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+==================================================
+🚀 STARTING HIERARCHICAL TEAM FORMATION
+==================================================
+🌱 Initializing with 1 leaders and 4 members.
+Phase 1: Clustering members by timezone...
+-> Found 1 distinct timezone groups.
+Phase 2: Clustering by category...
+🎯 Initial Clustering Complete: 1 teams created, 4 members initially unassigned.
+Phase 4: Reassigning 4 orphaned members...
+🤝 Orphan Reassignment Complete: 4 members placed. 0 remain unassigned.
+==================================================
+✅ TEAM FORMATION PROCESS COMPLETE
+==================================================
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: d75a0213b20591db078583a2a2b28ffc).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+==================================================
+🚀 STARTING HIERARCHICAL TEAM FORMATION
+==================================================
+🌱 Initializing with 1 leaders and 4 members.
+Phase 1: Clustering members by timezone...
+-> Found 1 distinct timezone groups.
+Phase 2: Clustering by category...
+🎯 Initial Clustering Complete: 1 teams created, 4 members initially unassigned.
+Phase 4: Reassigning 4 orphaned members...
+🤝 Orphan Reassignment Complete: 4 members placed. 0 remain unassigned.
+==================================================
+✅ TEAM FORMATION PROCESS COMPLETE
+==================================================
+==================================================
+🚀 STARTING HIERARCHICAL TEAM FORMATION
+==================================================
+🌱 Initializing with 1 leaders and 4 members.
+Phase 1: Clustering members by timezone...
+-> Found 1 distinct timezone groups.
+Phase 2: Clustering by category...
+🎯 Initial Clustering Complete: 1 teams created, 4 members initially unassigned.
+Phase 4: Reassigning 4 orphaned members...
+🤝 Orphan Reassignment Complete: 4 members placed. 0 remain unassigned.
+==================================================
+✅ TEAM FORMATION PROCESS COMPLETE
+==================================================
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 080f7089023a4ee4ea99e3e65be27faa).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+==================================================
+🚀 STARTING HIERARCHICAL TEAM FORMATION
+==================================================
+🌱 Initializing with 1 leaders and 4 members.
+Phase 1: Clustering members by timezone...
+-> Found 1 distinct timezone groups.
+Phase 2: Clustering by category...
+🎯 Initial Clustering Complete: 1 teams created, 4 members initially unassigned.
+Phase 4: Reassigning 4 orphaned members...
+🤝 Orphan Reassignment Complete: 4 members placed. 0 remain unassigned.
+==================================================
+✅ TEAM FORMATION PROCESS COMPLETE
+==================================================
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 6cabc5869ca61082f4ee687a00ab54b9).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+==================================================
+🚀 STARTING HIERARCHICAL TEAM FORMATION
+==================================================
+🌱 Initializing with 1 leaders and 4 members.
+Phase 1: Clustering members by timezone...
+-> Found 1 distinct timezone groups.
+Phase 2: Clustering by category...
+🎯 Initial Clustering Complete: 1 teams created, 4 members initially unassigned.
+Phase 4: Reassigning 4 orphaned members...
+🤝 Orphan Reassignment Complete: 4 members placed. 0 remain unassigned.
+==================================================
+✅ TEAM FORMATION PROCESS COMPLETE
+==================================================
+==================================================
+🚀 STARTING HIERARCHICAL TEAM FORMATION
+==================================================
+🌱 Initializing with 1 leaders and 4 members.
+Phase 1: Clustering members by timezone...
+-> Found 1 distinct timezone groups.
+Phase 2: Clustering by category...
+🎯 Initial Clustering Complete: 1 teams created, 4 members initially unassigned.
+Phase 4: Reassigning 4 orphaned members...
+🤝 Orphan Reassignment Complete: 4 members placed. 0 remain unassigned.
+==================================================
+✅ TEAM FORMATION PROCESS COMPLETE
+==================================================
+Failed to create proposed team 1: 'dict' object has no attribute 'team_role'
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_formation_service.py", line 274, in batch_create_teams
+    await provision_team_resources(guild, team)
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\utils\team_utils.py", line 61, in provision_team_resources
+    role = discord.utils.get(guild.roles, name=team.team_role) or await guild.create_role(name=team.team_role, reason=f"Provisioning for {team.team_role}")
+                                               ^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'team_role'
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 27f0e836d0b09bbd317205fa59d825c5).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+==================================================
+🚀 STARTING HIERARCHICAL TEAM FORMATION
+==================================================
+🌱 Initializing with 1 leaders and 4 members.
+Phase 1: Clustering members by timezone...
+-> Found 1 distinct timezone groups.
+Phase 2: Clustering by category...
+🎯 Initial Clustering Complete: 1 teams created, 4 members initially unassigned.
+Phase 4: Reassigning 4 orphaned members...
+🤝 Orphan Reassignment Complete: 4 members placed. 0 remain unassigned.
+==================================================
+✅ TEAM FORMATION PROCESS COMPLETE
+==================================================
+Failed to create proposed team 1: 'dict' object has no attribute 'team_role'
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_formation_service.py", line 275, in batch_create_teams
+    await provision_team_resources(guild, team)
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\utils\team_utils.py", line 62, in provision_team_resources
+    role = discord.utils.get(guild.roles, name=team.team_role) or await guild.create_role(name=team.team_role, reason=f"Provisioning for {team.team_role}")
+                                               ^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'team_role'
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: ae31dd0b7e31b3e9819bddc0881b609b).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+==================================================
+🚀 STARTING HIERARCHICAL TEAM FORMATION
+==================================================
+🌱 Initializing with 1 leaders and 4 members.
+Phase 1: Clustering members by timezone...
+-> Found 1 distinct timezone groups.
+Phase 2: Clustering by category...
+🎯 Initial Clustering Complete: 1 teams created, 4 members initially unassigned.
+Phase 4: Reassigning 4 orphaned members...
+🤝 Orphan Reassignment Complete: 4 members placed. 0 remain unassigned.
+==================================================
+✅ TEAM FORMATION PROCESS COMPLETE
+==================================================
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 93ce1138aa3d8c44d80ad98191431bca).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 08a2afd7e34443d33ee3210f43428d42).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Command error in GumBall: Command "help" is not found
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 164be5a6ccd9f723c08c534df41cb839).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Error in profile parsing: 'TeamManager' object has no attribute '_get_member_role_title'
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\profile_parsing.py", line 25, in handle_profile_parsing
+    role_title = self.team_manager._get_member_role_title(message.author)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TeamManager' object has no attribute '_get_member_role_title'
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 81e5851ee9ece9be0436cb7b2c057460).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 7edf057934098cbc7dcde5cebb7c264c).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
