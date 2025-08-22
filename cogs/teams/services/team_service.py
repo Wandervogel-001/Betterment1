@@ -1,6 +1,6 @@
 import logging
 import re
-from typing import List, Dict
+from typing import List, Dict, Tuple, Optional
 
 import discord
 from ..models.team import Team, TeamError, TeamNotFoundError, InvalidTeamError, TeamMember, TeamConfig
@@ -22,8 +22,20 @@ class TeamService:
     async def is_marathon_active(self, guild_id: int) -> bool:
         return await self.db.get_marathon_state(guild_id)
 
-    async def create_team(self, guild: discord.Guild, team_number: int, channel_name: str, member_mentions: str) -> Team:
-        """Creates a new team, including validation, member creation, and resource provisioning."""
+    async def get_marathon_state_info(self, guild_id: int) -> Dict:
+        """
+        Retrieves the full marathon state document, providing a default if none exists.
+        """
+        state_doc = await self.db.get_marathon_state_document(guild_id)
+        if state_doc:
+            return state_doc
+        # Return a default structure if no state is found in the database
+        return {"is_active": False, "last_changed": None}
+
+    async def create_team(self, guild: discord.Guild, team_number: int, channel_name: str, member_mentions: str) -> Tuple[Team, List[str]]:
+        """
+        Creates a new team and returns the team object and a list of invalid member IDs that were skipped.
+        """
         self.validator.validate_team_number(team_number)
         team_role = f"Team {team_number}"
 
@@ -34,20 +46,28 @@ class TeamService:
         member_ids = self.validator.parse_member_mentions(member_mentions)
         is_marathon = await self.is_marathon_active(guild.id)
 
-        valid_ids, _, _ = await self.validator.filter_and_validate_members(guild, member_ids, 0, not is_marathon)
+        # We need to know which members were invalid to report back to the user
+        valid_ids, invalid_ids, _ = await self.validator.filter_and_validate_members(guild, member_ids, 0, not is_marathon)
+
         if not valid_ids:
-            raise InvalidTeamError("No valid members were provided for the new team.")
+            # If no members are valid, raise a more descriptive error
+            error_message = "No valid members were provided for the new team."
+            if is_marathon and invalid_ids:
+                 error_message = "No valid members were provided. During a marathon, all members must have the 'Team Member' or 'Team Leader' role."
+            raise InvalidTeamError(error_message)
 
         members = await self.member_service.create_member_objects(guild, valid_ids, not is_marathon)
         team = Team(guild_id=guild.id, team_role=team_role, channel_name=formatted_channel, members=members, _team_number=team_number)
 
-        await self.db.insert_team(vars(team))
+        await self.db.insert_team(team.to_dict())
 
         if is_marathon:
             await team_utils.provision_team_resources(guild, team)
 
-        logger.info(f"Created team '{team_role}' with {len(members)} members.")
-        return team
+        logger.info(f"Created team '{team_role}' with {len(members)} members. Skipped {len(invalid_ids)} invalid members.")
+
+        # Return both the created team and the list of IDs that were skipped
+        return team, invalid_ids
 
     async def get_team(self, guild_id: int, team_name: str) -> Team:
         team_data = await self.db.get_team_by_name(guild_id, team_name)
@@ -140,7 +160,7 @@ class TeamService:
                 "team_number": team_number,
                 "team_role": role.name,
                 "channel_name": found_channel.name,
-                "members": {uid: vars(tm) for uid, tm in members_dict.items()}
+                "members": {uid: tm.to_dict() for uid, tm in members_dict.items()}
             }
 
             try:

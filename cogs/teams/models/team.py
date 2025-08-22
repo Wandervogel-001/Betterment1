@@ -40,6 +40,16 @@ class TeamMember:
     def is_member(self) -> bool:
         return self.role_title in ("Team Leader", "Team Member")
 
+    def to_dict(self) -> Dict:
+        """Returns a dictionary representation of the TeamMember object."""
+        return {
+            "user_id": self.user_id,
+            "username": self.username,
+            "display_name": self.display_name,
+            "role_title": self.role_title,
+            "profile_data": self.profile_data,
+        }
+
 @dataclass
 class Team:
     """Represents a team with members and channel."""
@@ -80,6 +90,16 @@ class Team:
     def get_leader_count(self) -> int:
         """Counts the number of leaders in the team."""
         return sum(1 for member in self.members.values() if member.is_leader())
+
+    def to_dict(self) -> Dict:
+        """Returns a dictionary representation of the Team object."""
+        return {
+            "guild_id": self.guild_id,
+            "team_role": self.team_role,
+            "channel_name": self.channel_name,
+            "members": {uid: member.to_dict() for uid, member in self.members.items()},
+            "_team_number": self._team_number,
+        }
 
 class TeamError(Exception):
     """Base exception for team-related errors."""

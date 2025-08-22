@@ -39,9 +39,9 @@ class PanelManager:
 
         # Add marathon state information
         if is_marathon_active:
-            embed.set_footer(text="Marathon Status: Active - Teams have Discord channels and roles")
+          embed.add_field(name="Marathon Status", value="`Active` - Teams have Discord channels and roles", inline=False )
         else:
-            embed.set_footer(text="Marathon Status: Inactive - Teams exist in database only")
+          embed.add_field(name="Marathon Status", value="`Inactive` - Teams exist in database only", inline=False )
 
         return embed
 

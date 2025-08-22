@@ -506,3 +506,616 @@ TeamsCog loaded successfully.
 Loaded cog: cogs.teams.cog
 Connected to 1 guilds
 Synced 6 global commands
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 2cb07a515c94e9e8538773e2a82d6d02).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Successfully updated channel name for team 'Team 1' to 'testing'.
+Could not find role 'Team 2' to deprovision.
+An unhandled command error occurred in TeamsCog: Command 'create_team' raised an exception: InvalidDocument: Invalid document {'guild_id': 1375913075491737670, 'team_role': 'Team 2', 'channel_name': 'bruh', 'members': {'1071467618420150414': TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={})}, '_team_number': 2, 'created_at': datetime.datetime(2025, 8, 21, 14, 26, 57, 690904), 'updated_at': datetime.datetime(2025, 8, 21, 14, 26, 57, 690908), '_id': ObjectId('68a72cb1727fbc5090d5d680')} | cannot encode object: TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={}), of type: <class 'cogs.teams.models.team.TeamMember'>
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\permissions.py", line 66, in wrapper
+    return await func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\cog.py", line 113, in create_team
+    team = await self.team_manager.create_team(interaction.guild, team_number, channel_name, members)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_manager.py", line 39, in create_team
+    return await self.team_service.create_team(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_service.py", line 44, in create_team
+    await self.db.insert_team(vars(team))
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\database.py", line 66, in insert_team
+    return await self.teams.insert_one(team_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\collection.py", line 891, in insert_one
+    self._insert_one(
+    ~~~~~~~~~~~~~~~~^
+        document,
+        ^^^^^^^^^
+    ...<5 lines>...
+        comment=comment,
+        ^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\collection.py", line 831, in _insert_one
+    self._database.client._retryable_write(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        acknowledged, _insert_command, session, operation=_Op.INSERT
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 2061, in _retryable_write
+    return self._retry_with_session(retryable, func, s, bulk, operation, operation_id)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 1947, in _retry_with_session
+    return self._retry_internal(
+           ~~~~~~~~~~~~~~~~~~~~^
+        func=func,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        operation_id=operation_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 1993, in _retry_internal
+    ).run()
+      ~~~^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 2730, in run
+    return self._read() if self._is_read else self._write()
+                                              ~~~~~~~~~~~^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 2862, in _write
+    return self._func(self._session, conn, self._retryable)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\collection.py", line 819, in _insert_command
+    result = conn.command(
+        self._database.name,
+    ...<5 lines>...
+        retryable_write=retryable_write,
+    )
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\helpers.py", line 47, in inner
+    return func(*args, **kwargs)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\pool.py", line 442, in command
+    self._raise_connection_failure(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\pool.py", line 414, in command
+    return command(
+        self,
+    ...<20 lines>...
+        write_concern=write_concern,
+    )
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\network.py", line 148, in command
+    request_id, msg, size, max_doc_size = message._op_msg(
+                                          ~~~~~~~~~~~~~~~^
+        flags, spec, dbname, read_preference, codec_options, ctx=compression_ctx
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\message.py", line 419, in _op_msg
+    return _op_msg_uncompressed(flags, command, identifier, docs, opts)
+bson.errors.InvalidDocument: Invalid document {'guild_id': 1375913075491737670, 'team_role': 'Team 2', 'channel_name': 'bruh', 'members': {'1071467618420150414': TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={})}, '_team_number': 2, 'created_at': datetime.datetime(2025, 8, 21, 14, 26, 57, 690904), 'updated_at': datetime.datetime(2025, 8, 21, 14, 26, 57, 690908), '_id': ObjectId('68a72cb1727fbc5090d5d680')} | cannot encode object: TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={}), of type: <class 'cogs.teams.models.team.TeamMember'>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'create_team' raised an exception: InvalidDocument: Invalid document {'guild_id': 1375913075491737670, 'team_role': 'Team 2', 'channel_name': 'bruh', 'members': {'1071467618420150414': TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={})}, '_team_number': 2, 'created_at': datetime.datetime(2025, 8, 21, 14, 26, 57, 690904), 'updated_at': datetime.datetime(2025, 8, 21, 14, 26, 57, 690908), '_id': ObjectId('68a72cb1727fbc5090d5d680')} | cannot encode object: TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={}), of type: <class 'cogs.teams.models.team.TeamMember'>
+An unhandled command error occurred in TeamsCog: Command 'create_team' raised an exception: InvalidDocument: Invalid document {'guild_id': 1375913075491737670, 'team_role': 'Team 2', 'channel_name': 'bruh', 'members': {'1071467618420150414': TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={})}, '_team_number': 2, 'created_at': datetime.datetime(2025, 8, 21, 14, 27, 48, 772391), 'updated_at': datetime.datetime(2025, 8, 21, 14, 27, 48, 772395), '_id': ObjectId('68a72ce4727fbc5090d5d681')} | cannot encode object: TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={}), of type: <class 'cogs.teams.models.team.TeamMember'>
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\permissions.py", line 66, in wrapper
+    return await func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\cog.py", line 113, in create_team
+    team = await self.team_manager.create_team(interaction.guild, team_number, channel_name, members)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_manager.py", line 39, in create_team
+    return await self.team_service.create_team(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_service.py", line 44, in create_team
+    await self.db.insert_team(vars(team))
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\database.py", line 66, in insert_team
+    return await self.teams.insert_one(team_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\collection.py", line 891, in insert_one
+    self._insert_one(
+    ~~~~~~~~~~~~~~~~^
+        document,
+        ^^^^^^^^^
+    ...<5 lines>...
+        comment=comment,
+        ^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\collection.py", line 831, in _insert_one
+    self._database.client._retryable_write(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        acknowledged, _insert_command, session, operation=_Op.INSERT
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 2061, in _retryable_write
+    return self._retry_with_session(retryable, func, s, bulk, operation, operation_id)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 1947, in _retry_with_session
+    return self._retry_internal(
+           ~~~~~~~~~~~~~~~~~~~~^
+        func=func,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        operation_id=operation_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 1993, in _retry_internal
+    ).run()
+      ~~~^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 2730, in run
+    return self._read() if self._is_read else self._write()
+                                              ~~~~~~~~~~~^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 2862, in _write
+    return self._func(self._session, conn, self._retryable)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\collection.py", line 819, in _insert_command
+    result = conn.command(
+        self._database.name,
+    ...<5 lines>...
+        retryable_write=retryable_write,
+    )
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\helpers.py", line 47, in inner
+    return func(*args, **kwargs)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\pool.py", line 442, in command
+    self._raise_connection_failure(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\pool.py", line 414, in command
+    return command(
+        self,
+    ...<20 lines>...
+        write_concern=write_concern,
+    )
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\network.py", line 148, in command
+    request_id, msg, size, max_doc_size = message._op_msg(
+                                          ~~~~~~~~~~~~~~~^
+        flags, spec, dbname, read_preference, codec_options, ctx=compression_ctx
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\message.py", line 419, in _op_msg
+    return _op_msg_uncompressed(flags, command, identifier, docs, opts)
+bson.errors.InvalidDocument: Invalid document {'guild_id': 1375913075491737670, 'team_role': 'Team 2', 'channel_name': 'bruh', 'members': {'1071467618420150414': TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={})}, '_team_number': 2, 'created_at': datetime.datetime(2025, 8, 21, 14, 27, 48, 772391), 'updated_at': datetime.datetime(2025, 8, 21, 14, 27, 48, 772395), '_id': ObjectId('68a72ce4727fbc5090d5d681')} | cannot encode object: TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={}), of type: <class 'cogs.teams.models.team.TeamMember'>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'create_team' raised an exception: InvalidDocument: Invalid document {'guild_id': 1375913075491737670, 'team_role': 'Team 2', 'channel_name': 'bruh', 'members': {'1071467618420150414': TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={})}, '_team_number': 2, 'created_at': datetime.datetime(2025, 8, 21, 14, 27, 48, 772391), 'updated_at': datetime.datetime(2025, 8, 21, 14, 27, 48, 772395), '_id': ObjectId('68a72ce4727fbc5090d5d681')} | cannot encode object: TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={}), of type: <class 'cogs.teams.models.team.TeamMember'>
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: eb80d8fab788296e999f9597c11ed565).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+An unhandled command error occurred in TeamsCog: Command 'create_team' raised an exception: InvalidDocument: Invalid document {'guild_id': 1375913075491737670, 'team_role': 'Team 2', 'channel_name': 'bruh', 'members': {'1071467618420150414': TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={})}, '_team_number': 2, 'created_at': datetime.datetime(2025, 8, 21, 14, 29, 10, 373762), 'updated_at': datetime.datetime(2025, 8, 21, 14, 29, 10, 373767), '_id': ObjectId('68a72d36ebff43c25169e35b')} | cannot encode object: TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={}), of type: <class 'cogs.teams.models.team.TeamMember'>
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\permissions.py", line 66, in wrapper
+    return await func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\cog.py", line 113, in create_team
+    team = await self.team_manager.create_team(interaction.guild, team_number, channel_name, members)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_manager.py", line 39, in create_team
+    return await self.team_service.create_team(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_service.py", line 44, in create_team
+    await self.db.insert_team(vars(team))
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\database.py", line 66, in insert_team
+    return await self.teams.insert_one(team_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\collection.py", line 891, in insert_one
+    self._insert_one(
+    ~~~~~~~~~~~~~~~~^
+        document,
+        ^^^^^^^^^
+    ...<5 lines>...
+        comment=comment,
+        ^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\collection.py", line 831, in _insert_one
+    self._database.client._retryable_write(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        acknowledged, _insert_command, session, operation=_Op.INSERT
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 2061, in _retryable_write
+    return self._retry_with_session(retryable, func, s, bulk, operation, operation_id)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 1947, in _retry_with_session
+    return self._retry_internal(
+           ~~~~~~~~~~~~~~~~~~~~^
+        func=func,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        operation_id=operation_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 1993, in _retry_internal
+    ).run()
+      ~~~^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 2730, in run
+    return self._read() if self._is_read else self._write()
+                                              ~~~~~~~~~~~^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 2862, in _write
+    return self._func(self._session, conn, self._retryable)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\collection.py", line 819, in _insert_command
+    result = conn.command(
+        self._database.name,
+    ...<5 lines>...
+        retryable_write=retryable_write,
+    )
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\helpers.py", line 47, in inner
+    return func(*args, **kwargs)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\pool.py", line 442, in command
+    self._raise_connection_failure(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\pool.py", line 414, in command
+    return command(
+        self,
+    ...<20 lines>...
+        write_concern=write_concern,
+    )
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\network.py", line 148, in command
+    request_id, msg, size, max_doc_size = message._op_msg(
+                                          ~~~~~~~~~~~~~~~^
+        flags, spec, dbname, read_preference, codec_options, ctx=compression_ctx
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\message.py", line 419, in _op_msg
+    return _op_msg_uncompressed(flags, command, identifier, docs, opts)
+bson.errors.InvalidDocument: Invalid document {'guild_id': 1375913075491737670, 'team_role': 'Team 2', 'channel_name': 'bruh', 'members': {'1071467618420150414': TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={})}, '_team_number': 2, 'created_at': datetime.datetime(2025, 8, 21, 14, 29, 10, 373762), 'updated_at': datetime.datetime(2025, 8, 21, 14, 29, 10, 373767), '_id': ObjectId('68a72d36ebff43c25169e35b')} | cannot encode object: TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={}), of type: <class 'cogs.teams.models.team.TeamMember'>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'create_team' raised an exception: InvalidDocument: Invalid document {'guild_id': 1375913075491737670, 'team_role': 'Team 2', 'channel_name': 'bruh', 'members': {'1071467618420150414': TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={})}, '_team_number': 2, 'created_at': datetime.datetime(2025, 8, 21, 14, 29, 10, 373762), 'updated_at': datetime.datetime(2025, 8, 21, 14, 29, 10, 373767), '_id': ObjectId('68a72d36ebff43c25169e35b')} | cannot encode object: TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={}), of type: <class 'cogs.teams.models.team.TeamMember'>
+An unhandled command error occurred in TeamsCog: Command 'create_team' raised an exception: InvalidDocument: Invalid document {'guild_id': 1375913075491737670, 'team_role': 'Team 2', 'channel_name': 'test', 'members': {'1071467618420150414': TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={})}, '_team_number': 2, 'created_at': datetime.datetime(2025, 8, 21, 14, 31, 6, 164874), 'updated_at': datetime.datetime(2025, 8, 21, 14, 31, 6, 164878), '_id': ObjectId('68a72daaebff43c25169e35c')} | cannot encode object: TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={}), of type: <class 'cogs.teams.models.team.TeamMember'>
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\permissions.py", line 66, in wrapper
+    return await func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\cog.py", line 113, in create_team
+    team = await self.team_manager.create_team(interaction.guild, team_number, channel_name, members)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_manager.py", line 39, in create_team
+    return await self.team_service.create_team(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_service.py", line 44, in create_team
+    await self.db.insert_team(vars(team))
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\database.py", line 66, in insert_team
+    return await self.teams.insert_one(team_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\collection.py", line 891, in insert_one
+    self._insert_one(
+    ~~~~~~~~~~~~~~~~^
+        document,
+        ^^^^^^^^^
+    ...<5 lines>...
+        comment=comment,
+        ^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\collection.py", line 831, in _insert_one
+    self._database.client._retryable_write(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        acknowledged, _insert_command, session, operation=_Op.INSERT
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 2061, in _retryable_write
+    return self._retry_with_session(retryable, func, s, bulk, operation, operation_id)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 1947, in _retry_with_session
+    return self._retry_internal(
+           ~~~~~~~~~~~~~~~~~~~~^
+        func=func,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        operation_id=operation_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 1993, in _retry_internal
+    ).run()
+      ~~~^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 2730, in run
+    return self._read() if self._is_read else self._write()
+                                              ~~~~~~~~~~~^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\mongo_client.py", line 2862, in _write
+    return self._func(self._session, conn, self._retryable)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\collection.py", line 819, in _insert_command
+    result = conn.command(
+        self._database.name,
+    ...<5 lines>...
+        retryable_write=retryable_write,
+    )
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\helpers.py", line 47, in inner
+    return func(*args, **kwargs)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\pool.py", line 442, in command
+    self._raise_connection_failure(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\pool.py", line 414, in command
+    return command(
+        self,
+    ...<20 lines>...
+        write_concern=write_concern,
+    )
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\synchronous\network.py", line 148, in command
+    request_id, msg, size, max_doc_size = message._op_msg(
+                                          ~~~~~~~~~~~~~~~^
+        flags, spec, dbname, read_preference, codec_options, ctx=compression_ctx
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\pymongo\message.py", line 419, in _op_msg
+    return _op_msg_uncompressed(flags, command, identifier, docs, opts)
+bson.errors.InvalidDocument: Invalid document {'guild_id': 1375913075491737670, 'team_role': 'Team 2', 'channel_name': 'test', 'members': {'1071467618420150414': TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={})}, '_team_number': 2, 'created_at': datetime.datetime(2025, 8, 21, 14, 31, 6, 164874), 'updated_at': datetime.datetime(2025, 8, 21, 14, 31, 6, 164878), '_id': ObjectId('68a72daaebff43c25169e35c')} | cannot encode object: TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={}), of type: <class 'cogs.teams.models.team.TeamMember'>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'create_team' raised an exception: InvalidDocument: Invalid document {'guild_id': 1375913075491737670, 'team_role': 'Team 2', 'channel_name': 'test', 'members': {'1071467618420150414': TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={})}, '_team_number': 2, 'created_at': datetime.datetime(2025, 8, 21, 14, 31, 6, 164874), 'updated_at': datetime.datetime(2025, 8, 21, 14, 31, 6, 164878), '_id': ObjectId('68a72daaebff43c25169e35c')} | cannot encode object: TeamMember(user_id='1071467618420150414', username='neural_network', display_name='neuron', role_title='Team Member', profile_data={}), of type: <class 'cogs.teams.models.team.TeamMember'>
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 8b9a7558642c58c2f18cf45b5802e326).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+An unhandled command error occurred in TeamsCog: Command 'create_team' raised an exception: AttributeError: 'Team' object has no attribute 'to_dict'
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\permissions.py", line 66, in wrapper
+    return await func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\cog.py", line 113, in create_team
+    team = await self.team_manager.create_team(interaction.guild, team_number, channel_name, members)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_manager.py", line 39, in create_team
+    return await self.team_service.create_team(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\services\team_service.py", line 44, in create_team
+    await self.db.insert_team(team.to_dict())
+                              ^^^^^^^^^^^^
+AttributeError: 'Team' object has no attribute 'to_dict'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'create_team' raised an exception: AttributeError: 'Team' object has no attribute 'to_dict'
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 1eef4a1fb3648d2f02eef59d8012de09).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Created team 'Team 2' with 1 members.
+Could not find role 'Team 2' to deprovision.
+Created team 'Team 3' with 1 members.
+Deleted Discord role: Team 1
+Deleted Discord channel: #testing
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 1e39d89f657435062b14ce9e1a7ffcc0).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Could not find role 'Team 2' to deprovision.
+Created team 'Team 1' with 1 members.
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 7424249328cb9736e0a85872ea0b378b).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Created team 'Team 3' with 1 members. Skipped 1 invalid members.
+Could not find role 'Team 2' to deprovision.
+==================================================
+🚀 STARTING HIERARCHICAL TEAM FORMATION
+==================================================
+🌱 Initializing with 0 leaders and 4 members.
+Phase 1: Clustering members by timezone...
+-> Found 1 distinct timezone groups.
+Phase 2: Clustering by category...
+🎯 Initial Clustering Complete: 0 teams created, 4 members initially unassigned.
+Phase 4: Reassigning 4 orphaned members...
+🤝 Orphan Reassignment Complete: 0 members placed. 4 remain unassigned.
+🚨 Final Unassigned Members: ['Luna', 'AgroALT', 'Lotus 🪷', '𝐑 𝐘 𝐎']
+==================================================
+✅ TEAM FORMATION PROCESS COMPLETE
+==================================================
+Could not find role 'Team 1' to deprovision.
+Could not find role 'Team 2' to deprovision.
+Could not find role 'Team 3' to deprovision.
+Error in marathon_status command: 'TeamService' object has no attribute 'get_marathon_state_info'
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 36c2ac6ee25637768288670d499b0caa).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 4d882abf72b2baa548124190a4708e20).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Ignoring exception in view <MainPanelView timeout=None children=7> for item <FetchDataButton style=<ButtonStyle.secondary: 2> url=None disabled=False label='Fetch Data' emoji=None row=1 sku_id=None>
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ui\view.py", line 435, in _scheduled_task
+    await item.callback(interaction)
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\permissions.py", line 66, in wrapper
+    return await func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\ui\buttons.py", line 170, in callback
+    await interaction.response.defer(thinking=True, ephemeral=True)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\interactions.py", line 844, in defer
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\webhook\async_.py", line 224, in request
+    raise NotFound(response, data)
+discord.errors.NotFound: 404 Not Found (error code: 10062): Unknown interaction
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: d663463a66d39ff1f32c873599c4225e).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Error in profile parsing: 'TeamManager' object has no attribute '_get_member_role_title'
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\profile_parsing.py", line 25, in handle_profile_parsing
+    role_title = self.team_manager._get_member_role_title(message.author)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TeamManager' object has no attribute '_get_member_role_title'

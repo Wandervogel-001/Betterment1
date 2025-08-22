@@ -110,19 +110,29 @@ class TeamsCog(commands.Cog):
         await interaction.response.defer(ephemeral=True)
 
         try:
-            team = await self.team_manager.create_team(interaction.guild, team_number, channel_name, members)
+            # The service now returns the team and a list of invalid member IDs
+            team, invalid_ids = await self.team_manager.create_team(interaction.guild, team_number, channel_name, members)
+
             response_parts = [f"✅ `{team.team_role}` created with {len(team.members)} members."]
+
+            # If any members were skipped, add a warning to the response
+            if invalid_ids:
+                skipped_count = len(invalid_ids)
+                is_marathon_active = await self.team_manager.is_marathon_active(interaction.guild_id)
+
+                reason = "they are already in another team or could not be found."
+                if is_marathon_active:
+                    reason = "they do not have the 'Team Member' or 'Team Leader' role required for the marathon."
+
+                response_parts.append(f"⚠️ Skipped {skipped_count} member(s) because {reason}")
+
             await interaction.followup.send(" ".join(response_parts), ephemeral=True)
             await self.panel_manager.refresh_team_panel(interaction.guild_id)
 
         except (InvalidTeamError, TeamError) as e:
-            # Add context about marathon state to error messages if relevant
-            error_msg = str(e)
-            if "don't have 'Team Leader' or 'Team Member' roles" in error_msg:
-                is_marathon_active = await self.team_manager.is_marathon_active(interaction.guild_id)
-                if is_marathon_active:
-                    error_msg += " Note: During marathon, only registered members with team roles can be added."
-            await interaction.followup.send(f"❌ {error_msg}", ephemeral=True)
+            # The error message from the service is now more descriptive
+            await interaction.followup.send(f"❌ {e}", ephemeral=True)
+
 
     @app_commands.command(name="add_members", description="Adds members to an existing team.")
     @app_commands.describe(team_number="The number of the team (e.g., 1 for Team 1).", members="Mention one or more members to add.")
