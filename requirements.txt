@@ -6,3 +6,4 @@ numpy==2.3.2
 python-dotenv==1.1.1
 sentence_transformers==5.0.0
 tenacity==8.5.0
+google-generativeai

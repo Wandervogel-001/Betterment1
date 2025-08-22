@@ -5,13 +5,22 @@ import numpy as np
 import tenacity
 import re
 from typing import Optional, Dict, List, Any
+
+# --- API Client Imports ---
 from huggingface_hub import InferenceClient
-from config import HUGGINGFACE_API_TOKEN, HUGGINGFACE_MODEL
+import openai
+import google.generativeai as genai
+
+# --- Configuration Imports ---
+from config import (
+    HUGGINGFACE_API_TOKEN, POE_API_KEY, GOOGLE_API_KEY,
+    HUGGINGFACE_MODELS, POE_MODELS, GOOGLE_MODELS, ACTIVE_AI_MODEL
+)
 from ..utils.timezone_utils import TimezoneProcessor
 
 logger = logging.getLogger(__name__)
 
-# --- SBERT Semantic Similarity Implementation ---
+# --- SBERT Semantic Similarity Implementation (remains unchanged) ---
 _model_cache: Optional[Any] = None
 _model_load_lock = asyncio.Lock()
 
@@ -58,20 +67,46 @@ class AIHandlerError(Exception): pass
 class AIExtractionError(AIHandlerError): pass
 
 class AIHandler:
-    """Handles AI operations: profile extraction and semantic comparison."""
+    """
+    Handles AI operations by dispatching to the appropriate API
+    based on the configured active model.
+    """
 
     def __init__(self):
-        if not HUGGINGFACE_API_TOKEN:
-            raise ValueError("HUGGINGFACE_API_TOKEN environment variable not set.")
-        self.client = InferenceClient(token=HUGGINGFACE_API_TOKEN)
-        self.model_name = HUGGINGFACE_MODEL
+        self.active_model = ACTIVE_AI_MODEL
+        self.api_provider = None
+        self.client = None
+
+        if self.active_model in HUGGINGFACE_MODELS:
+            self.api_provider = "huggingface"
+            if not HUGGINGFACE_API_TOKEN:
+                raise ValueError("HUGGINGFACE_API_TOKEN is not set for the active Hugging Face model.")
+            self.client = InferenceClient(token=HUGGINGFACE_API_TOKEN)
+            logger.info(f"AIHandler initialized with Hugging Face provider for model: {self.active_model}")
+
+        elif self.active_model in POE_MODELS:
+            self.api_provider = "poe"
+            if not POE_API_KEY:
+                raise ValueError("POE_API_KEY is not set for the active Poe model.")
+            self.client = openai.OpenAI(api_key=POE_API_KEY, base_url="https://api.poe.com/v1")
+            logger.info(f"AIHandler initialized with Poe provider for model: {self.active_model}")
+
+        elif self.active_model in GOOGLE_MODELS:
+            self.api_provider = "google"
+            if not GOOGLE_API_KEY:
+                raise ValueError("GOOGLE_API_KEY is not set for the active Google model.")
+            genai.configure(api_key=GOOGLE_API_KEY)
+            self.client = genai
+            logger.info(f"AIHandler initialized with Google provider for model: {self.active_model}")
+
+        else:
+            raise ValueError(f"The active model '{self.active_model}' is not configured in any of the model lists.")
+
         self.similarity_calculator = SimilarityCalculator()
 
     def _build_profile_prompt(self, profile_text: str) -> str:
         """Builds the dynamic prompt for the AI model."""
-        # Dynamically generate the list of timezones from the single source of truth.
         valid_timezones = ", ".join(f'"{tz}"' for tz in TimezoneProcessor.TIMEZONE_MAP.keys())
-
         return f"""
         You are an AI assistant that extracts structured data from user-written profile introductions.
         Return ONLY a valid, compact JSON object with the following fields (omit any missing fields):
@@ -100,24 +135,22 @@ class AIHandler:
         reraise=True
     )
     async def extract_profile_data(self, text: str) -> Optional[Dict]:
-        """Extracts structured data from profile text using the AI model."""
+        """Extracts structured data by calling the appropriate AI provider."""
         if len(text) < 20:
             logger.warning("Profile text too short for meaningful extraction.")
             return None
 
         prompt = self._build_profile_prompt(text)
         try:
-            loop = asyncio.get_event_loop()
-            completion = await loop.run_in_executor(
-                None,
-                lambda: self.client.chat_completion(
-                    messages=[{"role": "user", "content": prompt}],
-                    model=self.model_name,
-                    temperature=0.2,
-                    max_tokens=512
-                )
-            )
-            raw_response = completion.choices[0].message.content.strip()
+            if self.api_provider == "huggingface":
+                raw_response = await self._call_huggingface(prompt)
+            elif self.api_provider == "poe":
+                raw_response = await self._call_poe(prompt)
+            elif self.api_provider == "google":
+                raw_response = await self._call_google(prompt)
+            else:
+                raise AIHandlerError("No valid AI provider configured.")
+
             return self._parse_ai_response(raw_response)
         except json.JSONDecodeError as e:
             logger.error(f"Failed to parse AI JSON response: {e}. Raw response: '{raw_response}'")
@@ -126,14 +159,48 @@ class AIHandler:
             logger.error(f"An unexpected error occurred during profile extraction: {e}")
             raise AIExtractionError(f"Profile extraction failed: {str(e)}") from e
 
+    async def _call_huggingface(self, prompt: str) -> str:
+        """Makes an API call to the Hugging Face Inference API."""
+        loop = asyncio.get_event_loop()
+        completion = await loop.run_in_executor(
+            None,
+            lambda: self.client.chat_completion(
+                messages=[{"role": "user", "content": prompt}],
+                model=self.active_model,
+                temperature=0.2,
+                max_tokens=512
+            )
+        )
+        return completion.choices[0].message.content.strip()
+
+    async def _call_poe(self, prompt: str) -> str:
+        """Makes an API call to the Poe API."""
+        loop = asyncio.get_event_loop()
+        chat = await loop.run_in_executor(
+            None,
+            lambda: self.client.chat.completions.create(
+                model=self.active_model,
+                messages=[{"role": "user", "content": prompt}],
+            )
+        )
+        return chat.choices[0].message.content
+
+    async def _call_google(self, prompt: str) -> str:
+        """Makes an API call to the Google Gemini API."""
+        model = self.client.GenerativeModel(self.active_model)
+        loop = asyncio.get_event_loop()
+        response = await loop.run_in_executor(
+            None,
+            lambda: model.generate_content(prompt)
+        )
+        return response.text
+
     def _parse_ai_response(self, raw: str) -> Dict:
         """Cleans and parses the JSON response from the AI."""
-        # Remove markdown code blocks if present
         cleaned = re.sub(r"```json\n?|```", "", raw).strip()
         data = json.loads(cleaned)
         if not isinstance(data, dict):
             raise json.JSONDecodeError("AI response was not a valid JSON object.", cleaned, 0)
-        # Filter out empty values for cleaner data
         return {k: v for k, v in data.items() if v}
 
     async def compare_goals(self, goals1: List[str], goals2: List[str]) -> np.ndarray:
@@ -143,3 +210,4 @@ class AIHandler:
     async def compare_habits(self, habits1: List[str], habits2: List[str]) -> np.ndarray:
         """Compares two lists of habits for semantic similarity."""
         return await self.similarity_calculator.compare(habits1, habits2)
+
