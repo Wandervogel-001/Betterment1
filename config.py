@@ -17,26 +17,60 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # Model Lists
 HUGGINGFACE_MODELS = [
-    "deepseek-ai/DeepSeek-V3-0324",
-    # Add other Hugging Face models here
+  "deepseek-ai/DeepSeek-V3.1-Base",
+  "deepseek-ai/DeepSeek-V3.1",
+  "deepseek-ai/DeepSeek-V3-0324",
+  "deepseek-ai/DeepSeek-R1",
+  "openai/gpt-oss-120b",
+  "openai/gpt-oss-20b",
+
 ]
 
 POE_MODELS = [
-    "Qwen2.5_7B_Free",
-    "Gemma-2-9b-it",
-    # Add other Poe models here
+  # --- Free Teirs Gets 3000 Points per day ---
+  # --- by @siliconclouds ---
+  "Qwen2.5_7B_Free",
+  "Qwen2.5-72B-Instruct"
+  "Qwen2.5-Coder-32B-I",
+  "Qwen2-VL-72B-I",
+  "QwQ-32B-Preview",
+  "DeepSeek2.5",
+  "DeepSeek-VL2",
+  "GLM4-9B",
+  # --- by @Poe ---
+  "Assistant", # 7 points/message ~Varibale
+  # --- by @oratrice ---
+  "Gemma-2-9b-it", # 5 points/message
+  # --- by @openai ---
+  "GPT-5-nano", # 6 points/message
+  "GPT-4.1-nano", # 6 points/message
+  "GPT-4o-mini", # 9 points/message
+  "GPT-3.5-Turbo-Instruct", # 10 points/message
+  "GPT-3.5-Turbo", # 11 points/message
+  "GPT-3.5-Turbo-Raw", # 12 points/message
+  "GPT-4.1-mini", # 25 points/message
+  "GPT-5-mini", # 26 points/message
+  "GPT-4o-Aug", # 117 points/message
+  "GPT-5-Chat", # 130 points/message
+  "o3-mini", # 202 points/message
+  "GPT-4o", # 224 points/message
+  "GPT-4.1", # 226 points/message
+  "o4-mini", # 248 points/message
+  "GPT-5", # 251 points/message
+  "ChatGPT-4o-Latest", # 337 points/message
+  "o1-mini", # 337 points/message
+  "GPT-4-Turbo", # 378 points/message
 ]
 
 GOOGLE_MODELS = [
-    "gemini-2.5-flash",
-    "gemini-2.5-pro",
-    "gemini-1.5-flash",
-    "gemini-1.5-pro",
-    # Add other Google models here
+  "gemini-1.5-flash", # 1000 Requests Per Minute, Unlimited Requests Per Day
+  "gemini-2.5-flash", # 5 Requests Per Minute, 500 Requests Per Day
+  "gemini-1.5-pro", # 5 Requests Per Minute, 25 Requests Per Day
+  "gemini-2.5-pro", # 5 Requests Per Minute, 25 Requests Per Day
 ]
 
 # Active Model Selection (change this value to switch models)
-ACTIVE_AI_MODEL = os.getenv("ACTIVE_AI_MODEL", "gemini-1.5-flash")
+ACTIVE_AI_MODEL = os.getenv("ACTIVE_AI_MODEL", "gemini-2.5-flash")
 
 AI_TIMEOUT = int(os.getenv("AI_TIMEOUT", 30))
 

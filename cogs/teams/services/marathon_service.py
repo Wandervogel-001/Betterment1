@@ -10,9 +10,12 @@ class MarathonService:
     Handles the lifecycle of a marathon event by provisioning and deprovisioning
     Discord resources (roles and channels) for teams.
     """
-    def __init__(self, cog):
-        """Initializes the service with a reference to the main cog."""
-        self.cog = cog
+    def __init__(self, db, team_manager):
+        """
+        Initializes the service with only the dependencies it actually needs.
+        """
+        self.db = db
+        self.team_manager = team_manager
 
     async def start_marathon(self, guild: discord.Guild, teams: List[Team]) -> Dict:
         """

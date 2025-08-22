@@ -10,22 +10,28 @@ logger = logging.getLogger(__name__)
 class EventListeners:
     """Handles all event listeners for the bot."""
 
-    def __init__(self, cog):
-        self.cog = cog
-        self.bot = cog.bot
-        self.db = cog.db
-        self.config = cog.config
-        self.profile_parser = ProfileParser(cog)
+    def __init__(self, bot, db, profile_parser, team_manager, marathon_service, panel_manager, config, permission_manager):
+        self.bot = bot
+        self.db = db
+        self.profile_parser = profile_parser
+        self.team_manager = team_manager
+        self.marathon_service = marathon_service
+        self.panel_manager = panel_manager
+        self.config = config
+        self.permission_manager = permission_manager
 
-    async def on_ready(self):
+    async def on_ready(self, name):
         """Initializes the cog and restores persistent views."""
-        logger.info(f"{self.cog.__class__.__name__} cog ready.")
+        logger.info(f"{name} cog ready.")
         for guild in self.bot.guilds:
             try:
                 # Refresh panel on startup to ensure views are active
                 panel_data = await self.db.get_team_panel(guild.id)
                 if panel_data:
-                    self.bot.add_view(MainPanelView(self.cog), message_id=panel_data["message_id"])
+                    self.bot.add_view(
+                        MainPanelView(self.team_manager, self.marathon_service, self.panel_manager, self.db),
+                        message_id=panel_data["message_id"]
+                    )
             except Exception as e:
                 logger.error(f"Error restoring panel view for guild {guild.id}: {e}")
 
@@ -37,7 +43,7 @@ class EventListeners:
         guild = self.bot.get_guild(payload.guild_id)
         reactor = guild.get_member(payload.user_id)
 
-        if not guild or not reactor or not self.cog.permission_manager.is_moderator(reactor):
+        if not guild or not reactor or not self.permission_manager.is_moderator(reactor):
             return
 
         try:

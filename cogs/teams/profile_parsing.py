@@ -8,12 +8,10 @@ logger = logging.getLogger(__name__)
 class ProfileParser:
     """Handles profile parsing functionality."""
 
-    def __init__(self, cog):
-        self.cog = cog
-        self.bot = cog.bot
-        self.db = cog.db
-        self.team_manager = cog.team_manager
-        self.ai_handler = cog.ai_handler
+    def __init__(self, ai_handler, team_manager, db):
+        self.ai_handler = ai_handler
+        self.team_manager = team_manager
+        self.db = db
 
     async def handle_profile_parsing(self, message: Message):
         """Internal logic for parsing profile messages from reactions."""

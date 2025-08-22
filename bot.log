@@ -5,20 +5,24 @@ logging in using static token
  * Running on http://127.0.0.1:8080
  * Running on http://192.168.0.5:8080
 [33mPress CTRL+C to quit[0m
-Shard ID None has connected to Gateway (Session ID: 46d92ca407c7e489af33e285368f4aef).
+Shard ID None has connected to Gateway (Session ID: e0eac7a78ecae3256897ded9fa1525cf).
 Bot logged in as Betterment#4897
 Bot ID: 1392030134373974066
-AIHandler initialized with Google provider for model: gemini-2.5-pro
 AIHandler initialized with Google provider for model: gemini-2.5-pro
 TeamsCog loaded successfully.
 Loaded cog: cogs.teams.cog
 Connected to 1 guilds
 Synced 6 global commands
-Profile data saved for <@1156250522261672118>. profile_data: 
-{'habits': ['art', 'poetry', 'photography', 'guitar', 'journaling'], 'goals': ['to do my best', 'to always try to do my best'], 'category': {'creative_arts_and_hobbies': ['arts_and_creation', 'performance_and_play'], 'education_and_learning': ['personal_growth']}}
-An unexpected error occurred during profile extraction: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 1.
-An unexpected error occurred during profile extraction: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 1.
-An unexpected error occurred during profile extraction: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 1.
+Could not fetch member 1022649820898414604: 404 Not Found (error code: 10007): Unknown Member
+Error in TeamDropdown callback (view): EditChannelNameButton.__init__() missing 2 required positional arguments: 'db' and 'team_data'
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot - Testing\cogs\teams\ui\views.py", line 60, in callback
+    view = TeamManagementView(self.team_manager, self.panel_manager, team)
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot - Testing\cogs\teams\ui\views.py", line 109, in __init__
+    self.add_item(EditChannelNameButton(team_manager, panel_manager, team_data))
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: EditChannelNameButton.__init__() missing 2 required positional arguments: 'db' and 'team_data'
+Shard ID None has successfully RESUMED session e0eac7a78ecae3256897ded9fa1525cf.
 Database manager initialized.
 logging in using static token
 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
@@ -26,19 +30,37 @@ logging in using static token
  * Running on http://127.0.0.1:8080
  * Running on http://192.168.0.5:8080
 [33mPress CTRL+C to quit[0m
-Shard ID None has connected to Gateway (Session ID: 7bea258ad15f6b623a6449c5ee34cf1c).
+Shard ID None has connected to Gateway (Session ID: 5fe3ccbc32f0722fc1dca08876874c90).
 Bot logged in as Betterment#4897
 Bot ID: 1392030134373974066
 AIHandler initialized with Google provider for model: gemini-2.5-pro
-AIHandler initialized with Google provider for model: gemini-2.5-pro
-TeamsCog loaded successfully.
-Loaded cog: cogs.teams.cog
+Failed to load cog cogs.teams.cog: Extension 'cogs.teams.cog' raised an error: TypeError: ReflectButton.__init__() missing 1 required positional argument: 'db'
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ext\commands\bot.py", line 963, in _load_from_module_spec
+    await setup(self)
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot - Testing\cogs\teams\cog.py", line 313, in setup
+    await bot.add_cog(TeamsCog(bot))
+                      ~~~~~~~~^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot - Testing\cogs\teams\cog.py", line 41, in __init__
+    bot.add_view(MainPanelView(self.team_manager, self.marathon_service, self.panel_manager, self.db))
+                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot - Testing\cogs\teams\ui\views.py", line 25, in __init__
+    self.add_item(ReflectButton(team_manager, panel_manager))
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ReflectButton.__init__() missing 1 required positional argument: 'db'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot - Testing\main.py", line 56, in load_cogs
+    await bot.load_extension(cog_name)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ext\commands\bot.py", line 1029, in load_extension
+    await self._load_from_module_spec(spec, name)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ext\commands\bot.py", line 968, in _load_from_module_spec
+    raise errors.ExtensionFailed(key, e) from e
+discord.ext.commands.errors.ExtensionFailed: Extension 'cogs.teams.cog' raised an error: TypeError: ReflectButton.__init__() missing 1 required positional argument: 'db'
 Connected to 1 guilds
-Synced 6 global commands
-Google API call failed: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 1.
-An unexpected error occurred during profile extraction: Google API error: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 1.
-Profile data saved for <@1322479506245812245>. profile_data: 
-{'habits': ['Biking / Longboarding', 'Reading', 'Writing', 'Hot girl morning walks', 'Working out', 'Journaling', 'Watching true crime', 'Filming / Editing', 'Hiking', 'Eletrical guitar', 'Robotics', 'Babysitting', 'Tarot / "witchy" stuff'], 'goals': ['Have a successful YT, Insta, and TikTok acc this year for my project', 'Becoming healthier', 'Writing 2 books in hopes of publishing them one day', 'Able to walk 15 miles without being outta breath', 'Getting a clean bill of health to be able to participate in sports this year', 'Getting rid of this insomnia', "Getting 100's for every single marathon until April"], 'category': {'health_and_fitness': ['physical_health', 'mental_wellness', 'nutrition_and_sleep'], 'creative_arts_and_hobbies': ['arts_and_creation', 'performance_and_play'], 'education_and_learning': ['personal_growth'], 'technology_and_computing': ['emerging_tech_and_ai'], 'lifestyle_community_and_adventure': ['home_and_personal_life']}}
+Synced 0 global commands
 Database manager initialized.
 logging in using static token
 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
@@ -46,60 +68,95 @@ logging in using static token
  * Running on http://127.0.0.1:8080
  * Running on http://192.168.0.5:8080
 [33mPress CTRL+C to quit[0m
-Shard ID None has connected to Gateway (Session ID: c4b18420fe3e28d81cbc8aba3bc5114c).
+Shard ID None has connected to Gateway (Session ID: 83349bf169821301207ef7770a5c0cce).
 Bot logged in as Betterment#4897
 Bot ID: 1392030134373974066
-AIHandler initialized with Google provider for model: gemini-2.5-pro
 AIHandler initialized with Google provider for model: gemini-2.5-pro
 TeamsCog loaded successfully.
 Loaded cog: cogs.teams.cog
 Connected to 1 guilds
 Synced 6 global commands
-Profile data saved for <@902431108350754827>. profile_data: 
-{'habits': ['Chess', 'Physics', 'Badminton', 'Astronomy', 'Stem', 'Piano'], 'goals': ['Random goal 1', 'Random goal 2'], 'category': {'creative_arts_and_hobbies': ['performance_and_play'], 'science_and_research': ['scientific_fields'], 'health_and_fitness': ['physical_health']}}
-Google API call failed: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 1.
-An unexpected error occurred during profile extraction: Google API error: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 1.
-Google API call failed: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 1.
-An unexpected error occurred during profile extraction: Google API error: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 1.
-Google API call failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [violations {
-  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
-  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
-  quota_dimensions {
-    key: "model"
-    value: "gemini-2.5-pro"
-  }
-  quota_dimensions {
-    key: "location"
-    value: "global"
-  }
-  quota_value: 2
-}
-, links {
-  description: "Learn more about Gemini API quotas"
-  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
-}
-, retry_delay {
-  seconds: 32
-}
-]
-An unexpected error occurred during profile extraction: Google API error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [violations {
-  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
-  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
-  quota_dimensions {
-    key: "model"
-    value: "gemini-2.5-pro"
-  }
-  quota_dimensions {
-    key: "location"
-    value: "global"
-  }
-  quota_value: 2
-}
-, links {
-  description: "Learn more about Gemini API quotas"
-  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
-}
-, retry_delay {
-  seconds: 32
-}
-]
+Error in 'View Teams' button: 'NoneType' object has no attribute 'team_service'
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot - Testing\cogs\teams\ui\buttons.py", line 41, in callback
+    teams = await self.team_manager.team_service.get_all_teams(interaction.guild_id)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'team_service'
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 5fb7028b26e3980bcee2f953dd0ed8ea).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+AIHandler initialized with Google provider for model: gemini-2.5-pro
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: b3ccc41c08605be5c3f4e9f903f93aed).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+AIHandler initialized with Google provider for model: gemini-2.5-pro
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Successfully updated channel name for team 'Team 1' to 'testing'.
+==================================================
+🚀 STARTING HIERARCHICAL TEAM FORMATION
+==================================================
+🌱 Initializing with 0 leaders and 24 members.
+Phase 1: Clustering members by timezone...
+-> Found 1 distinct timezone groups.
+Phase 2: Clustering by category...
+🎯 Initial Clustering Complete: 0 teams created, 24 members initially unassigned.
+Phase 4: Reassigning 24 orphaned members...
+🤝 Orphan Reassignment Complete: 0 members placed. 24 remain unassigned.
+🚨 Final Unassigned Members: ['Luna', 'AgroALT', 'Lotus 🪷', '𝐑 𝐘 𝐎', 'Orion', 'Ariana', 'Violet', '⚡Neo9 | Hermione', 'crunchyfrog', 'CEY', 'WhiteX', "'Chandan'", 'NotMyCake', 'neuron', 'Lv', 'blue_cheez🍉', 'Richie', 'WayfarerMist', 'Evelyn Lien', 'lily', 'Fatma', 'Simply-Zakariyyaa', 'Delendrea', 'Ezra']
+==================================================
+✅ TEAM FORMATION PROCESS COMPLETE
+==================================================
+==================================================
+🚀 STARTING HIERARCHICAL TEAM FORMATION
+==================================================
+🌱 Initializing with 1 leaders and 24 members.
+Phase 1: Clustering members by timezone...
+-> Found 1 distinct timezone groups.
+Phase 2: Clustering by category...
+🎯 Initial Clustering Complete: 1 teams created, 24 members initially unassigned.
+Phase 4: Reassigning 24 orphaned members...
+🤝 Orphan Reassignment Complete: 11 members placed. 13 remain unassigned.
+🚨 Final Unassigned Members: ["'Chandan'", 'NotMyCake', 'neuron', 'Lv', 'blue_cheez🍉', 'Richie', 'WayfarerMist', 'Evelyn Lien', 'lily', 'Fatma', 'Simply-Zakariyyaa', 'Delendrea', 'Ezra']
+==================================================
+✅ TEAM FORMATION PROCESS COMPLETE
+==================================================
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: d4f16ea28012d181fbd88dae0908cea4).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+AIHandler initialized with Google provider for model: gemini-2.5-pro
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Profile data saved for <@565132220071804928>. profile_data: 
+{'habits': ['reading', 'running', 'gaming', 'journaling'], 'goals': ['finishing portfolio 1', 'finishing portfolio 2', 'increasing running distance', 'taking exam'], 'category': {'health_and_fitness': ['physical_health', 'mental_wellness'], 'business_and_finance': ['career_and_economics'], 'education_and_learning': ['academic_and_exam_prep', 'personal_growth'], 'creative_arts_and_hobbies': ['performance_and_play']}}
+Profile data saved for <@442360887932747776>. profile_data: 
+{'habits': ['早上五点起床', '锻炼', '编程', '健身', '写日记'], 'goals': ['在这个月的考试中取得优异成绩', '卧推达到 80 公斤'], 'category': {'health_and_fitness': ['physical_health', 'mental_wellness', 'nutrition_and_sleep'], 'technology_and_computing': ['software_and_web_dev'], 'education_and_learning': ['academic_and_exam_prep']}}

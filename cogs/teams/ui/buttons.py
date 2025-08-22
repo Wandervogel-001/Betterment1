@@ -16,70 +16,73 @@ class TeamButton(Button):
     and a consistent structure for callbacks. Permissions are now handled by the
     @moderator_required decorator.
     """
-    def __init__(self, cog, **kwargs):
+    def __init__(self, *args, **kwargs):
+        self.team_manager = kwargs.pop("team_manager", None)
+        self.marathon_service = kwargs.pop("marathon_service", None)
+        self.panel_manager = kwargs.pop("panel_manager", None)
+        self.db = kwargs.pop("db", None)
+
         super().__init__(**kwargs)
-        self.cog = cog
 
     async def handle_error(self, interaction: discord.Interaction, error: Exception):
         """Standardized error handling for all button interactions."""
         logger.error(f"Error in '{self.label}' button: {error}", exc_info=True)
-        # Use followup if the initial response was already sent
         responder = interaction.followup.send if interaction.response.is_done() else interaction.response.send_message
         await responder("❌ An error occurred. The incident has been logged.", ephemeral=True)
 
 class ViewTeamButton(TeamButton):
     """Button to view detailed information about registered teams."""
-    def __init__(self, cog):
-        super().__init__(cog, label="View Teams", style=discord.ButtonStyle.primary, custom_id="view_team_button", row=0)
+    def __init__(self, team_manager, panel_manager):
+        super().__init__(team_manager=team_manager, panel_manager=panel_manager, label="View Teams", style=discord.ButtonStyle.primary, custom_id="view_team_button", row=0)
     @moderator_required
     async def callback(self, interaction: discord.Interaction):
         try:
             from .views import TeamDropdownView # Avoid circular import
-            teams = await self.cog.team_manager.team_service.get_all_teams(interaction.guild_id)
+            teams = await self.team_manager.team_service.get_all_teams(interaction.guild_id)
             if not teams:
                 return await interaction.response.send_message("ℹ️ No teams are registered in the database.", ephemeral=True)
 
-            view = TeamDropdownView(self.cog, teams, action="view")
+            view = TeamDropdownView(self.team_manager, self.panel_manager, teams, action="view")
             await interaction.response.send_message("Select a team to view its details:", view=view, ephemeral=True)
         except Exception as e:
             await self.handle_error(interaction, e)
 
 class DeleteTeamButton(TeamButton):
     """Button to initiate deleting a team."""
-    def __init__(self, cog):
-        super().__init__(cog, label="Delete Team", style=discord.ButtonStyle.danger, custom_id="delete_team_button", row=0)
+    def __init__(self, team_manager, panel_manager):
+        super().__init__(team_manager=team_manager, panel_manager=panel_manager, label="Delete Team", style=discord.ButtonStyle.danger, custom_id="delete_team_button", row=0)
     @moderator_required
     async def callback(self, interaction: discord.Interaction):
         try:
             from .views import TeamDropdownView # Avoid circular import
-            teams = await self.cog.team_manager.team_service.get_all_teams(interaction.guild_id)
+            teams = await self.team_manager.team_service.get_all_teams(interaction.guild_id)
             if not teams:
                 return await interaction.response.send_message("ℹ️ No teams are available to delete.", ephemeral=True)
 
-            view = TeamDropdownView(self.cog, teams, action="delete")
+            view = TeamDropdownView(self.team_manager, self.panel_manager, teams, action="delete")
             await interaction.response.send_message("Select a team to delete:", view=view, ephemeral=True)
         except Exception as e:
             await self.handle_error(interaction, e)
 
 class StartMarathonButton(TeamButton):
     """Button to start the team marathon, creating roles and channels."""
-    def __init__(self, cog):
-        super().__init__(cog, label="Start Marathon", style=discord.ButtonStyle.success, custom_id="start_marathon_button", row=1)
+    def __init__(self, team_manager, marathon_service, panel_manager):
+        super().__init__(team_manager=team_manager, marathon_service=marathon_service, panel_manager=panel_manager, label="Start Marathon", style=discord.ButtonStyle.success, custom_id="start_marathon_button", row=1)
     @moderator_required
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.defer(thinking=True, ephemeral=True)
         try:
-            if await self.cog.team_manager.team_service.is_marathon_active(interaction.guild.id):
+            if await self.team_manager.team_service.is_marathon_active(interaction.guild.id):
                 return await interaction.followup.send("⚠️ Marathon is already active for this server.", ephemeral=True)
-            teams = await self.cog.team_manager.team_service.get_all_teams(interaction.guild.id)
+            teams = await self.team_manager.team_service.get_all_teams(interaction.guild.id)
             if not teams:
                 return await interaction.followup.send("❌ No registered teams found to start a marathon.", ephemeral=True)
 
-            results = await self.cog.marathon_service.start_marathon(interaction.guild, teams)
+            results = await self.marathon_service.start_marathon(interaction.guild, teams)
             if "error" in results:
                 return await interaction.followup.send(f"❌ {results['error']}", ephemeral=True)
             await interaction.followup.send(embed=self._build_results_embed(results), ephemeral=True)
-            await self.cog.panel_manager.refresh_team_panel(interaction.guild_id)
+            await self.panel_manager.refresh_team_panel(interaction.guild_id)
         except Exception as e:
             await self.handle_error(interaction, e)
 
@@ -98,22 +101,22 @@ class StartMarathonButton(TeamButton):
 
 class EndMarathonButton(TeamButton):
     """Button to end the marathon, cleaning up all related roles and channels."""
-    def __init__(self, cog):
-        super().__init__(cog, label="End Marathon", style=discord.ButtonStyle.danger, custom_id="end_marathon_button", row=1)
+    def __init__(self, team_manager, marathon_service, panel_manager):
+        super().__init__(team_manager=team_manager, marathon_service=marathon_service, panel_manager=panel_manager, label="End Marathon", style=discord.ButtonStyle.danger, custom_id="end_marathon_button", row=1)
     @moderator_required
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.defer(thinking=True, ephemeral=True)
         try:
-            if not await self.cog.team_manager.team_service.is_marathon_active(interaction.guild.id):
+            if not await self.team_manager.team_service.is_marathon_active(interaction.guild.id):
                 return await interaction.followup.send("⚠️ No active marathon found for this server.", ephemeral=True)
-            results = await self.cog.marathon_service.end_marathon(interaction.guild)
+            results = await self.marathon_service.end_marathon(interaction.guild)
             if "error" in results:
                 return await interaction.followup.send(f"❌ {results['error']}", ephemeral=True)
             if not results['removed_channels'] and not results['processed_teams']:
                 return await interaction.followup.send("ℹ️ No active marathon teams were found to clean up.", ephemeral=True)
 
             await interaction.followup.send(embed=self._build_results_embed(results), ephemeral=True)
-            await self.cog.panel_manager.refresh_team_panel(interaction.guild_id)
+            await self.panel_manager.refresh_team_panel(interaction.guild_id)
         except Exception as e:
             await self.handle_error(interaction, e)
 
@@ -129,14 +132,14 @@ class RefreshButton(TeamButton):
     Button to perform a full data synchronization and refresh the panel.
     This is the primary way to ensure the bot's data is aligned with Discord's state.
     """
-    def __init__(self, cog):
-        super().__init__(cog, label="Refresh", style=discord.ButtonStyle.secondary, custom_id="refresh_button", row=1)
+    def __init__(self, panel_manager):
+        super().__init__(panel_manager=panel_manager, label="Refresh", style=discord.ButtonStyle.secondary, custom_id="refresh_button", row=1)
     @moderator_required
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.defer(thinking=True, ephemeral=True)
         try:
             # This single call handles both DB sync and panel refresh
-            await self.cog.panel_manager.refresh_team_panel(interaction.guild_id, interaction)
+            await self.panel_manager.refresh_team_panel(interaction.guild_id, interaction)
         except Exception as e:
             await self.handle_error(interaction, e)
 
@@ -145,17 +148,17 @@ class ReflectButton(TeamButton):
     Button to run a reflection report, analyzing team health and listing unassigned members.
     This serves as the main entry point for team formation actions.
     """
-    def __init__(self, cog):
-        super().__init__(cog, label="Reflect & Form Teams", style=discord.ButtonStyle.secondary, custom_id="reflect_button", row=0)
+    def __init__(self, team_manager, panel_manager, db):
+        super().__init__(team_manager=team_manager, panel_manager=panel_manager, db=db, label="Reflect & Form Teams", style=discord.ButtonStyle.secondary, custom_id="reflect_button", row=0)
     @moderator_required
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.defer(thinking=True, ephemeral=True)
         try:
             from .views import ReflectionActionsView # Avoid circular import
-            report = await self.cog.sync_database_with_discord(interaction.guild)
-            embed = self.cog.panel_manager.build_reflection_embed(report)
+            report = await self.team_manager.sync_database_with_discord(interaction.guild)
+            embed = self.panel_manager.build_reflection_embed(report)
 
-            view = ReflectionActionsView(self.cog) if report.get("unassigned_leader_count", 0) + report.get("unassigned_member_count", 0) > 0 else discord.ui.View()
+            view = ReflectionActionsView(self.team_manager, self.panel_manager, self.db) if report.get("unassigned_leader_count", 0) + report.get("unassigned_member_count", 0) > 0 else discord.ui.View()
             await interaction.followup.send(embed=embed, view=view, ephemeral=True)
 
         except Exception as e:
@@ -163,13 +166,13 @@ class ReflectButton(TeamButton):
 
 class FetchDataButton(TeamButton):
     """Button to fetch team data from server."""
-    def __init__(self, cog):
-        super().__init__(cog, label="Fetch Data", style=discord.ButtonStyle.secondary, custom_id="fetch_data_button", row=1)
+    def __init__(self, team_manager, panel_manager):
+        super().__init__(team_manager=team_manager, panel_manager=panel_manager, label="Fetch Data", style=discord.ButtonStyle.secondary, custom_id="fetch_data_button", row=1)
     @moderator_required
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.defer(thinking=True, ephemeral=True)
         try:
-            results = await self.cog.team_manager.team_service.fetch_server_teams(interaction.guild)
+            results = await self.team_manager.team_service.fetch_server_teams(interaction.guild)
 
             embed = discord.Embed(
                 title="🔄 Data Fetch Results",
@@ -196,7 +199,7 @@ class FetchDataButton(TeamButton):
             await interaction.followup.send(embed=embed, ephemeral=True)
 
             if results['registered'] > 0:
-                await self.cog.panel_manager.refresh_team_panel(interaction.guild_id)
+                await self.panel_manager.refresh_team_panel(interaction.guild_id)
         except Exception as e:
             await self.handle_error(interaction, e)
 
@@ -204,18 +207,18 @@ class FetchDataButton(TeamButton):
 
 class DeleteMemberButton(TeamButton):
     """Button within a team view to open the member removal modal."""
-    def __init__(self, cog, team_role: str):
-        super().__init__(cog, label="Remove Member", style=discord.ButtonStyle.danger, custom_id=f"delete_member_{team_role}")
+    def __init__(self, team_manager, panel_manager, team_role: str):
+        super().__init__(team_manager=team_manager, panel_manager=panel_manager, label="Remove Member", style=discord.ButtonStyle.danger, custom_id=f"delete_member_{team_role}")
         self.team_role = team_role
     @moderator_required
     async def callback(self, interaction: discord.Interaction):
         try:
             # Ensure team still exists before opening modal
-            team = await self.cog.team_manager.team_service.get_team(interaction.guild_id, self.team_role)
+            team = await self.team_manager.team_service.get_team(interaction.guild_id, self.team_role)
             if not team.members:
                 return await interaction.response.send_message(f"❌ Team `{self.team_role}` has no members to remove.", ephemeral=True)
 
-            await interaction.response.send_modal(DeleteMemberModal(self.cog, self.team_role))
+            await interaction.response.send_modal(DeleteMemberModal(self.team_manager, self.panel_manager, self.team_role))
         except TeamNotFoundError:
             await interaction.response.send_message(f"❌ Team `{self.team_role}` no longer exists.", ephemeral=True)
         except Exception as e:
@@ -223,15 +226,15 @@ class DeleteMemberButton(TeamButton):
 
 class EditChannelNameButton(TeamButton):
     """Button within a team view to edit the team's channel name."""
-    def __init__(self, cog, team_data: Dict):
-        super().__init__(cog, label="Edit Channel", style=discord.ButtonStyle.secondary, custom_id=f"edit_channel_{team_data['team_role']}")
+    def __init__(self, team_manager, panel_manager, team_data: Dict):
+        super().__init__(team_manager=team_manager, panel_manager=panel_manager, label="Edit Channel", style=discord.ButtonStyle.secondary, custom_id=f"edit_channel_{team_data['team_role']}")
         self.team_data = team_data
     @moderator_required
     async def callback(self, interaction: discord.Interaction):
         try:
             # Ensure team exists before opening modal
-            await self.cog.team_manager.team_service.get_team(interaction.guild_id, self.team_data["team_role"])
-            await interaction.response.send_modal(EditChannelNameModal(self.cog, self.team_data))
+            await self.team_manager.team_service.get_team(interaction.guild_id, self.team_data["team_role"])
+            await interaction.response.send_modal(EditChannelNameModal(self.team_manager, self.panel_manager, self.team_data))
         except TeamNotFoundError:
             await interaction.response.send_message(f"❌ Team `{self.team_data['team_role']}` no longer exists.", ephemeral=True)
         except Exception as e:
@@ -239,18 +242,18 @@ class EditChannelNameButton(TeamButton):
 
 class ConfirmDeleteButton(TeamButton):
     """Button in a confirmation view to finalize the deletion of a team."""
-    def __init__(self, cog, team_name: str):
-        super().__init__(cog, label="Confirm & Delete", style=discord.ButtonStyle.danger, custom_id=f"confirm_delete_{team_name}")
+    def __init__(self, team_manager, panel_manager, team_name: str):
+        super().__init__(team_manager=team_manager, panel_manager=panel_manager, label="Confirm & Delete", style=discord.ButtonStyle.danger, custom_id=f"confirm_delete_{team_name}")
         self.team_name = team_name
     @moderator_required
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.defer(thinking=True, ephemeral=True)
         try:
-            success = await self.cog.team_manager.team_service.delete_team_and_resources(interaction.guild, self.team_name)
+            success = await self.team_manager.team_service.delete_team_and_resources(interaction.guild, self.team_name)
 
             if success:
                 await interaction.followup.send(f"✅ `{self.team_name}` and its resources have been deleted.", ephemeral=True)
-                await self.cog.panel_manager.refresh_team_panel(interaction.guild_id) # Refresh panel after deletion
+                await self.panel_manager.refresh_team_panel(interaction.guild_id) # Refresh panel after deletion
             else:
                 await interaction.followup.send(f"⚠️ `{self.team_name}` was not found in the database. It may have already been deleted.", ephemeral=True)
 
@@ -261,13 +264,13 @@ class ConfirmDeleteButton(TeamButton):
 
 class AssignMemberButton(TeamButton):
     """Button to start the process of assigning an unassigned member to a team."""
-    def __init__(self, cog):
-        super().__init__(cog, label="Assign Member", style=discord.ButtonStyle.success, custom_id="assign_member_button")
+    def __init__(self, team_manager, panel_manager, db):
+        super().__init__(team_manager=team_manager, panel_manager=panel_manager, db=db, label="Assign Member", style=discord.ButtonStyle.success, custom_id="assign_member_button")
     @moderator_required
     async def callback(self, interaction: discord.Interaction):
         try:
             from .views import UnregisteredMemberDropdownView # Avoid circular import
-            unregistered_doc = await self.cog.db.get_unregistered_document(interaction.guild_id)
+            unregistered_doc = await self.db.get_unregistered_document(interaction.guild_id)
 
             leaders = unregistered_doc.get("leaders", {}) if unregistered_doc else {}
             members = unregistered_doc.get("members", {}) if unregistered_doc else {}
@@ -275,7 +278,7 @@ class AssignMemberButton(TeamButton):
             if not leaders and not members:
                 return await interaction.response.send_message("ℹ️ There are no unassigned members to assign.", ephemeral=True)
 
-            view = UnregisteredMemberDropdownView(self.cog, {**leaders, **members})
+            view = UnregisteredMemberDropdownView(self.team_manager, self.panel_manager, {**leaders, **members})
             await interaction.response.send_message("Select a member to find a suitable team for them:", view=view, ephemeral=True)
         except Exception as e:
             await self.handle_error(interaction, e)
@@ -283,11 +286,11 @@ class AssignMemberButton(TeamButton):
 
 class FormTeamButton(TeamButton):
     """Button to trigger the automatic hierarchical formation of new teams."""
-    def __init__(self, cog):
-        super().__init__(cog, label="Form New Teams", style=discord.ButtonStyle.primary, custom_id="form_teams_button")
+    def __init__(self, team_manager, panel_manager, db):
+        super().__init__(team_manager=team_manager, panel_manager=panel_manager, db=db, label="Form New Teams", style=discord.ButtonStyle.primary, custom_id="form_teams_button")
     @moderator_required
     async def callback(self, interaction: discord.Interaction):
         try:
-            await interaction.response.send_modal(TeamFormationModal(self.cog))
+            await interaction.response.send_modal(TeamFormationModal(self.db, self.team_manager, self.panel_manager))
         except Exception as e:
             await self.handle_error(interaction, e)

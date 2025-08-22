@@ -1,4 +1,3 @@
-import discord
 from discord import Member, User, Interaction
 from typing import Union
 from functools import wraps

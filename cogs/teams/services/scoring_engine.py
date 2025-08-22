@@ -1,8 +1,7 @@
 import logging
 import re
-from typing import Dict, Optional, Set, List
+from typing import Dict, Set, List
 import numpy as np
-from ..services.ai_handler import AIHandler
 from ..services.category_matcher import CategoryMatcher
 from ..utils.timezone_utils import TimezoneProcessor
 from config import (
@@ -15,7 +14,7 @@ logger = logging.getLogger(__name__)
 class TeamScoringEngine:
     """Provides tools for calculating compatibility between members and teams."""
 
-    def __init__(self, ai_handler: AIHandler):
+    def __init__(self, ai_handler):
         self.ai_handler = ai_handler
         self.tz_processor = TimezoneProcessor()
         self.category_matcher = CategoryMatcher()

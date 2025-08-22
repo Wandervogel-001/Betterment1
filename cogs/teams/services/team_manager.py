@@ -2,12 +2,10 @@ import logging
 import discord
 from typing import Dict, List
 
-from ..models.team import TeamConfig, TeamError
+from ..models.team import TeamConfig
 from ..services.team_service import TeamService
 from ..services.team_member_service import TeamMemberService
 from ..services.team_validation import TeamValidator
-from ..services.ai_handler import AIHandler
-from ..services.scoring_engine import TeamScoringEngine
 from ..services.team_formation_service import TeamFormationService
 
 logger = logging.getLogger(__name__)
@@ -18,18 +16,16 @@ class TeamManager:
     specialized services for validation, team operations, and member management.
 
     """
-
-    def __init__(self, db):
+    def __init__(self, db, ai_handler, scorer):
         self.db = db
         self.config = TeamConfig()
+        self.ai_handler = ai_handler
+        self.scorer = scorer
 
-        # Initialize specialized services
+        # Sub-services under manager ownership
         self.validator = TeamValidator(self.db)
         self.member_service = TeamMemberService(self.db, self.validator)
         self.team_service = TeamService(self.db, self.validator, self.member_service)
-
-        # Initialize other high-level services
-        self.scorer = TeamScoringEngine(AIHandler())
         self.formation_service = TeamFormationService(self.scorer, self.db, self)
 
     # ========== PUBLIC METHODS ==========
@@ -106,3 +102,17 @@ class TeamManager:
             "unassigned_leader_count": sync_report["leader_count"],
             "unassigned_member_count": sync_report["member_count"],
         }
+
+    # ========== CORE HELPER METHODS ==========
+
+    async def sync_database_with_discord(self, guild: discord.Guild) -> Dict:
+          """
+          Centralized method to synchronize the database with the current state of Discord.
+          This is the single source of truth for data reflection.
+          """
+          try:
+              report = await self.reflect_teams(guild)
+              return report
+          except Exception as e:
+              logger.error(f"Error during data sync for guild {guild.id}: {e}", exc_info=True)
+              return {}

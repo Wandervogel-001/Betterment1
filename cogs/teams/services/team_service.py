@@ -4,8 +4,6 @@ from typing import List, Dict, Tuple, Optional
 
 import discord
 from ..models.team import Team, TeamError, TeamNotFoundError, InvalidTeamError, TeamMember, TeamConfig
-from .team_validation import TeamValidator
-from .team_member_service import TeamMemberService
 from ..utils import team_utils
 
 logger = logging.getLogger(__name__)
@@ -13,7 +11,7 @@ logger = logging.getLogger(__name__)
 class TeamService:
     """Handles high-level team CRUD and state management operations."""
 
-    def __init__(self, db, validator: TeamValidator, member_service: TeamMemberService):
+    def __init__(self, db, validator, member_service):
         self.config = TeamConfig()
         self.db = db
         self.validator = validator

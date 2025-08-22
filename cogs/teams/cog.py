@@ -6,6 +6,7 @@ from typing import Dict, Optional
 
 from .services.team_manager import TeamManager
 from .services.ai_handler import AIHandler
+from .services.scoring_engine import TeamScoringEngine
 from .services.marathon_service import MarathonService
 from .models.team import TeamConfig, TeamError, InvalidTeamError, TeamNotFoundError
 from .ui.views import MainPanelView
@@ -19,49 +20,32 @@ from .profile_parsing import ProfileParser
 logger = logging.getLogger(__name__)
 
 class TeamsCog(commands.Cog):
-    """
-    Main cog for all team management functionality. This refactored version
-    centralizes permission checking and data synchronization for improved
-    consistency and maintainability across all commands and UI components.
-    """
-
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.db = bot.db
         self.config = TeamConfig()
-        self.team_manager = TeamManager(self.db)
-        self.ai_handler = AIHandler()
-        self.marathon_service = MarathonService(self)
 
-        # Initialize component managers
+        # --- Singletons (owned by cog) ---
+        self.ai_handler = AIHandler()
+        self.scorer = TeamScoringEngine(self.ai_handler)
+        self.team_manager = TeamManager(self.db, self.ai_handler, self.scorer)
+
+        # --- Lightweight services/managers ---
+        self.marathon_service = MarathonService(self.db, self.team_manager)
         self.permission_manager = PermissionManager()
-        self.panel_manager = PanelManager(self)
-        self.event_listeners = EventListeners(self)
-        self.profile_parser = ProfileParser(self)
+        self.panel_manager = PanelManager(self.bot, self.db, self.team_manager, self.marathon_service)
+        self.profile_parser = ProfileParser(self.ai_handler, self.team_manager, self.db)
+        self.event_listeners = EventListeners(self.bot, self.db, self.profile_parser, self.team_manager, self.marathon_service, self.panel_manager, self.config, self.permission_manager)
 
         # Add persistent view
-        bot.add_view(MainPanelView(self))
-
-    # ========== CORE HELPER METHODS ==========
-
-    async def sync_database_with_discord(self, guild: discord.Guild) -> Dict:
-        """
-        Centralized method to synchronize the database with the current state of Discord.
-        This is the single source of truth for data reflection.
-        """
-        try:
-            report = await self.team_manager.reflect_teams(guild)
-            return report
-        except Exception as e:
-            logger.error(f"Error during data sync for guild {guild.id}: {e}", exc_info=True)
-            return {}
+        bot.add_view(MainPanelView(self.team_manager, self.marathon_service, self.panel_manager, self.db))
 
     # ========== EVENT LISTENERS ==========
 
     @commands.Cog.listener()
     async def on_ready(self):
         """Initializes the cog and restores persistent views."""
-        await self.event_listeners.on_ready()
+        await self.event_listeners.on_ready(self.__class__.__name__)
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload: discord.RawReactionActionEvent):
@@ -91,7 +75,7 @@ class TeamsCog(commands.Cog):
 
         # Create new panel
         embed = await self.panel_manager.build_teams_embed(interaction.guild_id)
-        view = MainPanelView(self)
+        view = MainPanelView(self.team_manager, self.marathon_service, self.panel_manager, self.db)
         msg = await interaction.channel.send(embed=embed, view=view)
         await self.db.save_team_panel(interaction.guild_id, interaction.channel_id, msg.id)
         await interaction.followup.send("✅ Team management panel created!",ephemeral=True)
@@ -100,7 +84,7 @@ class TeamsCog(commands.Cog):
     @moderator_required
     async def sync_command(self, interaction: Interaction):
         await interaction.response.defer(thinking=True, ephemeral=True)
-        report = await self.sync_database_with_discord(interaction.guild)
+        report = await self.team_manager.sync_database_with_discord(interaction.guild)
         await interaction.followup.send("✅ Database synchronization complete." if report else "❌ Sync failed.", ephemeral=True)
 
     @app_commands.command(name="create_team", description="Creates a new team.")

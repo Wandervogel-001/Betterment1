@@ -11,11 +11,11 @@ logger = logging.getLogger(__name__)
 class PanelManager:
     """Handles all panel management functionality."""
 
-    def __init__(self, cog):
-        self.cog = cog
-        self.bot = cog.bot
-        self.db = cog.db
-        self.team_manager = cog.team_manager
+    def __init__(self, bot, db, team_manager, marathon_service):
+        self.bot = bot
+        self.db = db
+        self.team_manager = team_manager
+        self.marathon_service = marathon_service
 
     def _team_sort_key(self, team_name: str) -> int:
         """Extract numeric part from team name for sorting."""
@@ -29,7 +29,7 @@ class PanelManager:
         embed = discord.Embed(title="🏆 Team Management Panel", color=discord.Color.blue())
 
         if not teams:
-            embed.description = "No teams are registered yet. Use `/create_team` or the `Reflect` button to find teams."
+            embed.description = "No teams are registered yet. Use `/create_team` or the `Fetch Data` button to find teams."
         else:
             team_list = "\n".join(
                 f"• `{team.team_role}` ({len(team.members)} members) - `#{team.channel_name}`"
@@ -109,7 +109,7 @@ class PanelManager:
             return
 
         # Perform data sync before refreshing the panel
-        await self.cog.sync_database_with_discord(guild)
+        await self.team_manager.sync_database_with_discord(guild)
 
         panel_data = await self.db.get_team_panel(guild_id)
         if not panel_data:
@@ -125,7 +125,7 @@ class PanelManager:
 
             msg = await channel.fetch_message(panel_data["message_id"])
             embed = await self.build_teams_embed(guild_id)
-            view = MainPanelView(self.cog)
+            view = MainPanelView(self.team_manager, self.marathon_service, self, self.db)
             await msg.edit(embed=embed, view=view)
             self.bot.add_view(view, message_id=msg.id)
             if interaction:
