@@ -1119,3 +1119,88 @@ Traceback (most recent call last):
     role_title = self.team_manager._get_member_role_title(message.author)
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AttributeError: 'TeamManager' object has no attribute '_get_member_role_title'
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: ce1246c3fac85f6ad7575fdf28bb4c41).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Error in profile parsing: 'TeamManager' object has no attribute '_get_member_role_title'
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\profile_parsing.py", line 25, in handle_profile_parsing
+    role_title = self.team_manager._get_member_role_title(message.author)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'TeamManager' object has no attribute '_get_member_role_title'
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: abcfbf59b0932bdc92c1de23ef0ca93e).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Error in profile parsing: Logger._log() got an unexpected keyword argument 'delete_after'
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\profile_parsing.py", line 39, in handle_profile_parsing
+    logger.info(f"Profile data saved for {message.author.mention}.", delete_after=10)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\logging\__init__.py", line 1519, in info
+    self._log(INFO, msg, args, **kwargs)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Logger._log() got an unexpected keyword argument 'delete_after'
+Error in profile parsing: Logger._log() got an unexpected keyword argument 'delete_after'
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\profile_parsing.py", line 39, in handle_profile_parsing
+    logger.info(f"Profile data saved for {message.author.mention}.")
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\logging\__init__.py", line 1519, in info
+    self._log(INFO, msg, args, **kwargs)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Logger._log() got an unexpected keyword argument 'delete_after'
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 6940bcb5c3617c23213b3234d3d4a722).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Profile data saved for <@442360887932747776>.
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 227cea0698ac471ac57c12fc4350f94d).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Profile data saved for <@902431108350754827>. profile_data: 
+{'habits': ['chess', 'physics', 'badminton', 'astronomy', 'stem', 'piano'], 'goals': ['random goal 1', 'random goal 2'], 'category': {'creative_arts_and_hobbies': ['arts_and_creation', 'performance_and_play'], 'science_and_research': ['scientific_fields']}}
+Profile data saved for <@675370319346925585>. profile_data: 
+{'habits': ['Reading', 'Singing', 'Dancing', 'Poetry or Prose musings', 'Thrilling rides', 'Mountain rides', 'Nature Walks', 'Solitude Self-Talks'], 'goals': ['To ace my upcoming exams', 'To build the web dev college project', 'To refine my routine to increase efficieny', "Read 3 books I'm currently reading", 'Tracking my food habits'], 'category': {'education_and_learning': ['academic_and_exam_prep'], 'technology_and_computing': ['software_and_web_dev'], 'health_and_fitness': ['nutrition_and_sleep', 'mental_wellness'], 'creative_arts_and_hobbies': ['arts_and_creation', 'performance_and_play'], 'lifestyle_community_and_adventure': ['travel_and_adventure']}}

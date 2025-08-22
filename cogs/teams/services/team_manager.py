@@ -69,6 +69,10 @@ class TeamManager:
         """Delegates marathon state info retrieval to TeamService."""
         return await self.team_service.get_marathon_state_info(*args, **kwargs)
 
+    def _get_member_role_title(self, member: discord.Member) -> str:
+        """Delegates getting the member's role title to the TeamService."""
+        return self.team_service._get_member_role_title(member)
+
     # ========== ORCHESTRATION METHODS ==========
 
     async def reflect_teams(self, guild: discord.Guild) -> Dict[str, List]:

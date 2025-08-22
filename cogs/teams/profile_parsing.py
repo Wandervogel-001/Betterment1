@@ -20,7 +20,7 @@ class ProfileParser:
         try:
             extracted_data = await self.ai_handler.extract_profile_data(message.content)
             if not extracted_data:
-                return await message.channel.send("❌ AI failed to extract data.", delete_after=10)
+                return await message.channel.send("❌ AI failed to extract data.", delete_after=5)
 
             role_title = self.team_manager._get_member_role_title(message.author)
             if role_title == "Unregistered":
@@ -36,9 +36,9 @@ class ProfileParser:
             }
             await self.db.save_unregistered_member(message.guild.id, str(message.author.id), member_data, role_type)
             await message.add_reaction("💾")  # Add a save icon reaction
-            await message.channel.send(f"✅ Profile data saved for {message.author.mention}.", delete_after=10)
+            logger.info(f"Profile data saved for {message.author.mention}. profile_data: \n{extracted_data}")
         except AIExtractionError as e:
-            await message.channel.send(f"❌ AI Error: {e}", delete_after=15)
+            await message.channel.send(f"❌ AI Error: {e}", delete_after=5)
         except Exception as e:
             logger.error(f"Error in profile parsing: {e}", exc_info=True)
-            await message.channel.send("❌ An unexpected error occurred.", delete_after=15)
+            await message.channel.send("❌ An unexpected error occurred.", delete_after=5)

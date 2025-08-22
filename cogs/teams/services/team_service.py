@@ -19,6 +19,22 @@ class TeamService:
         self.validator = validator
         self.member_service = member_service
 
+    def _get_member_role_title(self, member: discord.Member) -> str:
+        """
+        Gets the specific role title ("Team Leader", "Team Member", "Unregistered")
+        for a given Discord member by checking their roles in real-time.
+        The order of checks is important to assign the highest role.
+        """
+        # Create a set of role names for efficient lookup
+        role_names = {role.name for role in member.roles}
+
+        if "Team Leader" in role_names:
+            return "Team Leader"
+        if "Team Member" in role_names:
+            return "Team Member"
+
+        return "Unregistered"
+
     async def is_marathon_active(self, guild_id: int) -> bool:
         return await self.db.get_marathon_state(guild_id)
 
