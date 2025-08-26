@@ -35,3 +35,7 @@ class TimezoneProcessor:
         hour_diff = abs(tz_offset1 - tz_offset2)
         # Score is 1.0 for 0 diff, decaying to 0.0 for >= 9 hours diff.
         return max(0.0, 1.0 - (hour_diff / 9.0))
+
+if __name__ == "__main__":
+    timezones = ", ".join(f'"{tz}"' for tz in TimezoneProcessor.TIMEZONE_MAP.keys())
+    print(f"Valid timezones: {timezones}")

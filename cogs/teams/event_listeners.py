@@ -20,9 +20,8 @@ class EventListeners:
         self.config = config
         self.permission_manager = permission_manager
 
-    async def on_ready(self, name):
+    async def on_ready(self):
         """Initializes the cog and restores persistent views."""
-        logger.info(f"{name} cog ready.")
         for guild in self.bot.guilds:
             try:
                 # Refresh panel on startup to ensure views are active
@@ -51,6 +50,6 @@ class EventListeners:
             message = await channel.fetch_message(payload.message_id)
             if message.author.bot:
                 return
-            await self.profile_parser.handle_profile_parsing(message)
+            await self.profile_parser.handle_profile_parsing(message, payload.guild_id)
         except discord.NotFound:
             pass

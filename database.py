@@ -2,25 +2,23 @@ import logging
 from typing import Optional, Dict, List, Any
 from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import datetime
-from config import DB_NAME, TEAMS_COLLECTION, TEAM_PANELS_COLLECTION, UNREGISTERED_MEMBERS_COLLECTION, MARATHON_STATE_COLLECTION
+from config import DB_NAME, TEAMS_COLLECTION, UNREGISTERED_MEMBERS_COLLECTION, SETTINGS_COLLECTION, DEFAULT_AI_MODEL
 
 logger = logging.getLogger(__name__)
 
 class TeamDatabaseManager:
     """
-    Manages all database interactions for team and member data using MongoDB.
-    This refactored version simplifies the schema for unregistered members to
-    improve performance and reduce code complexity.
+    Manages all database interactions for the bot, using a unified 'settings'
+    collection for guild-specific configurations.
     """
     def __init__(self, uri: str, db_name: str = DB_NAME):
         """Initializes the database client and collections."""
         self.client = AsyncIOMotorClient(uri)
         self.db = self.client[db_name]
         self.teams = self.db[TEAMS_COLLECTION]
-        self.team_panels = self.db[TEAM_PANELS_COLLECTION]
+        self.settings = self.db[SETTINGS_COLLECTION]
         self.unregistered = self.db[UNREGISTERED_MEMBERS_COLLECTION]
-        self.marathon_state = self.db[MARATHON_STATE_COLLECTION]
-        logger.info("Database manager initialized.")
+        logger.info("Database manager initialized with unified settings collection.")
 
     # ========== GENERIC CRUD OPERATIONS ==========
 
@@ -96,24 +94,75 @@ class TeamDatabaseManager:
         """Updates the channel name for a specific team."""
         return await self.update_team_field(guild_id, team_name, "channel_name", new_channel_name)
 
-    async def delete_team_panel(self, guild_id: int):
-        """Deletes the team panel message reference."""
-        return await self._delete_document(self.team_panels, {"guild_id": guild_id})
+    # ========== SETTINGS: AI MODEL ==========
 
-    # ========== TEAM PANELS ==========
+    async def get_active_ai_model(self, guild_id: int) -> str:
+        """Retrieves the active AI model for the guild, returning the default if not set."""
+        settings_doc = await self._find_document(self.settings, {"guild_id": guild_id})
+        if settings_doc and "ai_model" in settings_doc:
+            return settings_doc["ai_model"]
+        return DEFAULT_AI_MODEL
+
+    async def set_active_ai_model(self, guild_id: int, model_name: str):
+        """Sets the active AI model for the guild."""
+        return await self._update_document(
+            self.settings,
+            {"guild_id": guild_id},
+            {"ai_model": model_name},
+            upsert=True
+        )
+
+    # ========== SETTINGS: TEAM PANEL ==========
 
     async def save_team_panel(self, guild_id: int, channel_id: int, message_id: int):
-        """Saves or updates the team panel message reference."""
+        """Saves or updates the team panel info within the guild's settings document."""
+        panel_data = {"channel_id": channel_id, "message_id": message_id}
         return await self._update_document(
-            self.team_panels,
+            self.settings,
             {"guild_id": guild_id},
-            {"channel_id": channel_id, "message_id": message_id},
+            {"team_panel": panel_data},
             upsert=True
         )
 
     async def get_team_panel(self, guild_id: int) -> Optional[Dict[str, Any]]:
-        """Retrieves the team panel message reference."""
-        return await self._find_document(self.team_panels, {"guild_id": guild_id})
+        """Retrieves the team panel object from the guild's settings document."""
+        settings_doc = await self._find_document(self.settings, {"guild_id": guild_id})
+        return settings_doc.get("team_panel") if settings_doc else None
+
+    async def delete_team_panel(self, guild_id: int):
+        """Deletes the team panel object from the guild's settings document."""
+        return await self.settings.update_one(
+            {"guild_id": guild_id},
+            {"$unset": {"team_panel": ""}, "$set": {"updated_at": datetime.utcnow()}}
+        )
+
+    # ========== SETTINGS: MARATHON STATE ==========
+
+    async def get_marathon_state(self, guild_id: int) -> bool:
+        """Retrieves the marathon's active status from the guild's settings document."""
+        settings_doc = await self._find_document(self.settings, {"guild_id": guild_id})
+        if settings_doc and "marathon_state" in settings_doc:
+            return settings_doc["marathon_state"].get("is_active", False)
+        return False
+
+    async def set_marathon_state(self, guild_id: int, is_active: bool) -> bool:
+        """Sets the marathon state within the guild's settings document."""
+        state_data = {
+            "is_active": is_active,
+            "last_changed": datetime.utcnow()
+        }
+        result = await self._update_document(
+            self.settings,
+            {"guild_id": guild_id},
+            {"marathon_state": state_data},
+            upsert=True
+        )
+        return result.modified_count > 0 or result.upserted_id is not None
+
+    async def get_marathon_state_document(self, guild_id: int) -> Optional[Dict[str, Any]]:
+        """Retrieves the marathon state object from the guild's settings document."""
+        settings_doc = await self._find_document(self.settings, {"guild_id": guild_id})
+        return settings_doc.get("marathon_state") if settings_doc else None
 
     # ========== UNREGISTERED MEMBER MANAGEMENT ==========
 
@@ -148,7 +197,6 @@ class TeamDatabaseManager:
         if from_type not in ["leaders", "members"] or to_type not in ["leaders", "members"]:
             raise ValueError("role_type must be 'leaders' or 'members'")
 
-        # Find the document and get the member data in one go
         unregistered_doc = await self.get_unregistered_document(guild_id)
         if not unregistered_doc or user_id not in unregistered_doc.get(from_type, {}):
             logger.warning(f"User {user_id} not found in unregistered '{from_type}' list for guild {guild_id}.")
@@ -156,7 +204,6 @@ class TeamDatabaseManager:
 
         member_data = unregistered_doc[from_type][user_id]
 
-        # Perform an atomic move using $rename and $set
         update_pipeline = {
             "$set": {f"{to_type}.{user_id}": member_data, "updated_at": datetime.utcnow()},
             "$unset": {f"{from_type}.{user_id}": ""}
@@ -164,39 +211,3 @@ class TeamDatabaseManager:
 
         result = await self.unregistered.update_one({"guild_id": guild_id}, update_pipeline)
         return result.modified_count > 0
-
-    # ========== MARATHON STATE MANAGEMENT ==========
-
-    async def get_marathon_state(self, guild_id: int) -> bool:
-        """
-        Retrieves the marathon state for a guild.
-        Returns True if marathon is active, False if not active or not found.
-        """
-        state_doc = await self._find_document(self.marathon_state, {"guild_id": guild_id})
-        return state_doc.get("is_active", False) if state_doc else False
-
-    async def set_marathon_state(self, guild_id: int, is_active: bool) -> bool:
-        """
-        Sets the marathon state for a guild.
-        Creates a new document if it doesn't exist.
-        Returns True if the operation was successful.
-        """
-        state_data = {
-            "is_active": is_active,
-            "last_changed": datetime.utcnow()
-        }
-
-        result = await self._update_document(
-            self.marathon_state,
-            {"guild_id": guild_id},
-            state_data,
-            upsert=True
-        )
-        return result.modified_count > 0 or result.upserted_id is not None
-
-    async def get_marathon_state_document(self, guild_id: int) -> Optional[Dict[str, Any]]:
-        """
-        Retrieves the full marathon state document for a guild.
-        Useful for getting additional metadata like last_changed timestamp.
-        """
-        return await self._find_document(self.marathon_state, {"guild_id": guild_id})

@@ -160,3 +160,364 @@ Profile data saved for <@565132220071804928>. profile_data:
 {'habits': ['reading', 'running', 'gaming', 'journaling'], 'goals': ['finishing portfolio 1', 'finishing portfolio 2', 'increasing running distance', 'taking exam'], 'category': {'health_and_fitness': ['physical_health', 'mental_wellness'], 'business_and_finance': ['career_and_economics'], 'education_and_learning': ['academic_and_exam_prep', 'personal_growth'], 'creative_arts_and_hobbies': ['performance_and_play']}}
 Profile data saved for <@442360887932747776>. profile_data: 
 {'habits': ['早上五点起床', '锻炼', '编程', '健身', '写日记'], 'goals': ['在这个月的考试中取得优异成绩', '卧推达到 80 公斤'], 'category': {'health_and_fitness': ['physical_health', 'mental_wellness', 'nutrition_and_sleep'], 'technology_and_computing': ['software_and_web_dev'], 'education_and_learning': ['academic_and_exam_prep']}}
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 6e5c4682f327f3ebf22161a16f2377ed).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+AIHandler initialized with Google provider for model: gemini-2.5-pro
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Profile data saved for <@589425101833895936>. profile_data: 
+{'habits': ['wake up at 5 am', 'workout', 'programming', 'gym', 'journaling'], 'goals': ["acing this month's exams", 'reaching 80Kg Bench press'], 'category': {'health_and_fitness': ['physical_health', 'mental_wellness'], 'technology_and_computing': ['software_and_web_dev'], 'education_and_learning': ['academic_and_exam_prep'], 'lifestyle_community_and_adventure': ['home_and_personal_life']}}
+Shard ID None has successfully RESUMED session 6e5c4682f327f3ebf22161a16f2377ed.
+Shard ID None has successfully RESUMED session 6e5c4682f327f3ebf22161a16f2377ed.
+Database manager initialized.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 207cfce1ba8649054d77c13fcb609206).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+AIHandler initialized with Google provider for model: gemini-2.5-flash
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Database manager initialized with unified settings collection.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: ed100952e5994d6a48ea1081f47f64ec).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+AIHandler initialized with Google provider for model: gemini-2.5-flash
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Database manager initialized with unified settings collection.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 4522fe5434a7ecb3c989c00f1e2130ec).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+AIHandler initialized with Google provider for model: gemini-2.5-flash
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 6 global commands
+Database manager initialized with unified settings collection.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: ecaa700525d2751abfe24049faa4770e).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+Failed to load cog cogs.teams.cog: Extension 'cogs.teams.cog' raised an error: TypeError: AIHandler.__init__() missing 2 required positional arguments: 'db' and 'guild_id'
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ext\commands\bot.py", line 963, in _load_from_module_spec
+    await setup(self)
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\cog.py", line 329, in setup
+    await bot.add_cog(TeamsCog(bot))
+                      ~~~~~~~~^^^^^
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\cog.py", line 30, in __init__
+    self.ai_handler = AIHandler()
+                      ~~~~~~~~~^^
+TypeError: AIHandler.__init__() missing 2 required positional arguments: 'db' and 'guild_id'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\main.py", line 56, in load_cogs
+    await bot.load_extension(cog_name)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ext\commands\bot.py", line 1029, in load_extension
+    await self._load_from_module_spec(spec, name)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ext\commands\bot.py", line 968, in _load_from_module_spec
+    raise errors.ExtensionFailed(key, e) from e
+discord.ext.commands.errors.ExtensionFailed: Extension 'cogs.teams.cog' raised an error: TypeError: AIHandler.__init__() missing 2 required positional arguments: 'db' and 'guild_id'
+Connected to 1 guilds
+Synced 0 global commands
+Database manager initialized with unified settings collection.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: bd63f430b23bbbccd6109925143528e5).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 7 global commands
+Error in change_ai_model command: 400 Bad Request (error code: 50035): Invalid Form Body
+In data.components.1.components.0.options: This field is required
+Error in change_ai_model command: 400 Bad Request (error code: 50035): Invalid Form Body
+In data.components.1.components.0.options: This field is required
+Database manager initialized with unified settings collection.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 8835b6cf58cc86b49ad0a92638f9f67f).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 7 global commands
+Ignoring exception in view <AIModelSelectionView timeout=300 children=3> for item <BrandSelect placeholder='1. Select a model provider...' min_values=1 max_values=1 disabled=False>
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ui\view.py", line 435, in _scheduled_task
+    await item.callback(interaction)
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\ui\ai_model_selection.py", line 31, in callback
+    await interaction.response.edit_message(view=self.view)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\interactions.py", line 1154, in edit_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\webhook\async_.py", line 226, in request
+    raise HTTPException(response, data)
+discord.errors.HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body
+In data.components.1.components.0.options: Must be between 1 and 25 in length.
+Ignoring exception in view <AIModelSelectionView timeout=300 children=3> for item <BrandSelect placeholder='1. Select a model provider...' min_values=1 max_values=1 disabled=False>
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ui\view.py", line 435, in _scheduled_task
+    await item.callback(interaction)
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\ui\ai_model_selection.py", line 31, in callback
+    await interaction.response.edit_message(view=self.view)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\interactions.py", line 1154, in edit_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\webhook\async_.py", line 226, in request
+    raise HTTPException(response, data)
+discord.errors.HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body
+In data.components.1.components.0.options: Must be between 1 and 25 in length.
+Initialized API client for model: deepseek/deepseek-r1:free
+HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+Profile data saved for <@746520418822783036>. profile_data: 
+{'timezone': 'PST', 'habits': ['study math', 'read 30 mins', 'play chess 30 mins'], 'goals': ['keep my math grade at an A', 'get my english grade up to a A', 'gain 200 elo on chess.com blitz'], 'category': {'education_and_learning': ['academic_and_exam_prep'], 'creative_arts_and_hobbies': ['performance_and_play']}}
+Database manager initialized with unified settings collection.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: a8ed8ecafbc49353e609c4d1b777d70a).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 7 global commands
+Ignoring exception in view <AIModelSelectionView timeout=300 children=3> for item <BrandSelect placeholder='1. Select a model provider...' min_values=1 max_values=1 disabled=False>
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ui\view.py", line 435, in _scheduled_task
+    await item.callback(interaction)
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\ui\ai_model_selection.py", line 31, in callback
+    await interaction.response.edit_message(view=self.view)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\interactions.py", line 1154, in edit_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\webhook\async_.py", line 226, in request
+    raise HTTPException(response, data)
+discord.errors.HTTPException: 400 Bad Request (error code: 50035): Invalid Form Body
+In data.components.1.components.0.options: Must be between 1 and 25 in length.
+Database manager initialized with unified settings collection.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 7d8f0de6f42f499172687aed2aed4ff6).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 7 global commands
+Database manager initialized with unified settings collection.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: d514f7a469d3336ada50ec6a57f6dc66).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 7 global commands
+Database manager initialized with unified settings collection.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 9ca88f058fb75fdafc158af200577f86).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 7 global commands
+Database manager initialized with unified settings collection.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: da9c9995af6ff17779b25c5a0b6e881f).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 7 global commands
+Database manager initialized with unified settings collection.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: c2571444f93d541731313caa70890741).
+Ignoring exception in command tree
+Traceback (most recent call last):
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1151, in wrapper
+    await self._call(interaction)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1283, in _call
+    command, options = self._get_app_command_options(data)
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\app_commands\tree.py", line 1187, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'change_ai_model' not found
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 7 global commands
+Database manager initialized with unified settings collection.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 0b069e2d3eb0ce1401fe799ffb652e3a).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 7 global commands
+Error in change_ai_model command: object Embed can't be used in 'await' expression
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\cog.py", line 304, in change_ai_model
+    await view.start()
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\cogs\teams\ui\ai_model_selection.py", line 88, in start
+    embed = await self._build_category_embed()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: object Embed can't be used in 'await' expression
+Database manager initialized with unified settings collection.
+logging in using static token
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.5:8080
+[33mPress CTRL+C to quit[0m
+Shard ID None has connected to Gateway (Session ID: 923fd441b2169314cd66e7e703c64b6e).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+TeamsCog loaded successfully.
+Loaded cog: cogs.teams.cog
+Connected to 1 guilds
+Synced 7 global commands
+Shard ID None has successfully RESUMED session 923fd441b2169314cd66e7e703c64b6e.
+Initialized API client for model: openai/gpt-oss-20b:free
+HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+Profile data saved for <@565132220071804928>. profile_data: 
+{'habits': ['reading', 'running', 'gaming', 'journaling'], 'goals': ['finishing portfolio 1', 'finishing portfolio 2', 'increasing running distance', 'taking exam'], 'category': {'health_and_fitness': ['physical_health', 'mental_wellness'], 'technology_and_computing': ['software_and_web_dev'], 'education_and_learning': ['academic_and_exam_prep', 'personal_growth'], 'business_and_finance': ['career_and_economics']}}
+Initialized API client for model: gemini-2.5-flash
+Profile data saved for <@565132220071804928>. profile_data: 
+{'habits': ['reading', 'running', 'gaming', 'journaling'], 'goals': ['finishing portfolio 1', 'finishing portfolio 2', 'increasing running distance', 'taking exam'], 'category': {'health_and_fitness': ['physical_health', 'mental_wellness'], 'creative_arts_and_hobbies': ['performance_and_play'], 'education_and_learning': ['academic_and_exam_prep', 'personal_growth'], 'business_and_finance': ['career_and_economics']}}
+Profile data saved for <@624079447082926082>. profile_data: 
+{'habits': ['singing', 'cooking potatoes'], 'goals': ['adjusting my health through sleep and diet and daily habits', 'complete remaining work tasks before next week'], 'category': {'health_and_fitness': ['physical_health', 'nutrition_and_sleep'], 'business_and_finance': ['career_and_economics'], 'creative_arts_and_hobbies': ['performance_and_play'], 'lifestyle_community_and_adventure': ['home_and_personal_life']}}
+Profile data saved for <@1237549347823030344>. profile_data: 
+{'habits': ['long runs', 'participating in 10k runs'], 'goals': ['build a coaching business', 'build physique', 'build a YouTube community'], 'category': {'health_and_fitness': ['physical_health'], 'business_and_finance': ['business_strategy'], 'lifestyle_community_and_adventure': ['social_and_community']}}
+==================================================
+🚀 STARTING HIERARCHICAL TEAM FORMATION
+==================================================
+🌱 Initializing with 2 leaders and 25 members.
+Phase 1: Clustering members by timezone...
+-> Found 1 distinct timezone groups.
+Phase 2: Clustering by category...
+🎯 Initial Clustering Complete: 2 teams created, 25 members initially unassigned.
+Phase 4: Reassigning 25 orphaned members...
+🤝 Orphan Reassignment Complete: 22 members placed. 3 remain unassigned.
+🚨 Final Unassigned Members: ['Orion', 'Lotus 🪷', 'Harish N Logan']
+==================================================
+✅ TEAM FORMATION PROCESS COMPLETE
+==================================================
+Shard ID None has successfully RESUMED session 923fd441b2169314cd66e7e703c64b6e.
+Shard ID None has successfully RESUMED session 923fd441b2169314cd66e7e703c64b6e.
+Shard ID None has successfully RESUMED session 923fd441b2169314cd66e7e703c64b6e.
+Shard ID None has successfully RESUMED session 923fd441b2169314cd66e7e703c64b6e.
+Shard ID None has successfully RESUMED session 923fd441b2169314cd66e7e703c64b6e.
+Shard ID None has successfully RESUMED session 923fd441b2169314cd66e7e703c64b6e.
+Shard ID None has successfully RESUMED session 923fd441b2169314cd66e7e703c64b6e.
+Shard ID None has successfully RESUMED session 923fd441b2169314cd66e7e703c64b6e.
+Shard ID None has stopped responding to the gateway. Closing and restarting.
+Shard ID None session has been invalidated.
+Shard ID None has connected to Gateway (Session ID: ea3642f8488023c1a432bed6c0e6db81).
+Bot logged in as Betterment#4897
+Bot ID: 1392030134373974066
+Failed to load cog cogs.teams.cog: Extension 'cogs.teams.cog' is already loaded.
+Traceback (most recent call last):
+  File "d:\Home\Documents\Programming\Python\Developer Mode\Discord\Betterment\Bot\main.py", line 56, in load_cogs
+    await bot.load_extension(cog_name)
+  File "C:\Users\Joseph\AppData\Local\Programs\Python\Python313\Lib\site-packages\discord\ext\commands\bot.py", line 1023, in load_extension
+    raise errors.ExtensionAlreadyLoaded(name)
+discord.ext.commands.errors.ExtensionAlreadyLoaded: Extension 'cogs.teams.cog' is already loaded.
+Connected to 1 guilds
+Synced 7 global commands
+Shard ID None has successfully RESUMED session ea3642f8488023c1a432bed6c0e6db81.

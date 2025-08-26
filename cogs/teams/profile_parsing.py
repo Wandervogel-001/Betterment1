@@ -13,10 +13,10 @@ class ProfileParser:
         self.team_manager = team_manager
         self.db = db
 
-    async def handle_profile_parsing(self, message: Message):
+    async def handle_profile_parsing(self, message: Message, guild_id: int):
         """Internal logic for parsing profile messages from reactions."""
         try:
-            extracted_data = await self.ai_handler.extract_profile_data(message.content)
+            extracted_data = await self.ai_handler.extract_profile_data(message.content, guild_id)
             if not extracted_data:
                 return await message.channel.send("❌ AI failed to extract data.", delete_after=5)
 

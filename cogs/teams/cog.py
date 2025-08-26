@@ -8,8 +8,9 @@ from .services.team_manager import TeamManager
 from .services.ai_handler import AIHandler
 from .services.scoring_engine import TeamScoringEngine
 from .services.marathon_service import MarathonService
-from .models.team import TeamConfig, TeamError, InvalidTeamError, TeamNotFoundError
+from .models.team import TeamConfig, TeamError, InvalidTeamError
 from .ui.views import MainPanelView
+from .ui.ai_model_selection import AIModelSelectionView
 
 # Import the separated modules
 from .permissions import PermissionManager, moderator_required
@@ -26,7 +27,7 @@ class TeamsCog(commands.Cog):
         self.config = TeamConfig()
 
         # --- Singletons (owned by cog) ---
-        self.ai_handler = AIHandler()
+        self.ai_handler = AIHandler(self.db)
         self.scorer = TeamScoringEngine(self.ai_handler)
         self.team_manager = TeamManager(self.db, self.ai_handler, self.scorer)
 
@@ -45,7 +46,7 @@ class TeamsCog(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         """Initializes the cog and restores persistent views."""
-        await self.event_listeners.on_ready(self.__class__.__name__)
+        await self.event_listeners.on_ready()
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload: discord.RawReactionActionEvent):
@@ -294,6 +295,18 @@ class TeamsCog(commands.Cog):
             logger.error(f"Error in marathon_status command: {e}")
             await interaction.followup.send("❌ Failed to process marathon status command.", ephemeral=True)
 
+    @app_commands.command(name="change_ai_model", description="Change the active AI model for the server.")
+    @moderator_required
+    async def change_ai_model(self, interaction: Interaction):
+        """Starts the guided flow to change the server's AI model."""
+        try:
+            currently_active_model = await self.db.get_active_ai_model(interaction.guild_id)
+            view = AIModelSelectionView(self.db, interaction, currently_active_model)
+            await view.start()
+        except Exception as e:
+            logger.error(f"Error in change_ai_model command: {e}", exc_info=True)
+            if not interaction.response.is_done():
+                await interaction.response.send_message("❌ An error occurred while starting the selection process.", ephemeral=True)
 
     # ========== ERROR HANDLING ==========
 

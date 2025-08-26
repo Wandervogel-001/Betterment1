@@ -14,6 +14,8 @@ DB_NAME = os.getenv("DB_NAME", "Betterment")
 HUGGINGFACE_API_TOKEN = os.getenv("HUGGINGFACE_API_TOKEN")
 POE_API_KEY = os.getenv("POE_API_KEY")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 # Model Lists
 HUGGINGFACE_MODELS = [
@@ -23,7 +25,6 @@ HUGGINGFACE_MODELS = [
   "deepseek-ai/DeepSeek-R1",
   "openai/gpt-oss-120b",
   "openai/gpt-oss-20b",
-
 ]
 
 POE_MODELS = [
@@ -69,8 +70,30 @@ GOOGLE_MODELS = [
   "gemini-2.5-pro", # 5 Requests Per Minute, 25 Requests Per Day
 ]
 
-# Active Model Selection (change this value to switch models)
-ACTIVE_AI_MODEL = os.getenv("ACTIVE_AI_MODEL", "gemini-2.5-flash")
+DEEPSEEK_MODELS = [
+  "deepseek-chat",
+  "deepseek-coder",
+]
+
+OPENROUTER_MODELS = [
+  "openai/gpt-oss-20b:free",
+  "qwen/qwen3-coder:free",
+  "deepseek/deepseek-r1-0528-qwen3-8b:free",
+  "qwen/qwen2.5-vl-32b-instruct:free",
+  "qwen/qwq-32b:free",
+  "qwen/qwen-2.5-coder-32b-instruct:free",
+  "google/gemma-3n-e2b-it:free",
+  "google/gemma-3-27b-it:free",
+  "google/gemini-2.0-flash-exp:free",
+  "deepseek/deepseek-r1:free",
+  "deepseek/deepseek-chat-v3-0324:free",
+  "mistralai/mistral-small-3.2-24b-instruct:free",
+  "mistralai/mistral-small-24b-instruct-2501:free",
+  "mistralai/mistral-7b-instruct:free",
+]
+
+# Default model if none is set in the server's settings
+DEFAULT_AI_MODEL = os.getenv("DEFAULT_AI_MODEL", "gemini-2.5-flash")
 
 AI_TIMEOUT = int(os.getenv("AI_TIMEOUT", 30))
 
@@ -84,10 +107,9 @@ MAX_TEAM_SIZE = int(os.getenv("MAX_TEAM_SIZE", 12))
 MAX_LEADERS_PER_TEAM = int(os.getenv("MAX_LEADERS_PER_TEAM", 2))
 
 # --- Database Collection Names ---
-TEAMS_COLLECTION =os.getenv("TEAMS_COLLECTION", "teams")
-TEAM_PANELS_COLLECTION =os.getenv("TEAM_PANELS_COLLECTION", "team_panels")
-UNREGISTERED_MEMBERS_COLLECTION =os.getenv("UNREGISTERED_MEMBERS_COLLECTION", "unregistered_members")
-MARATHON_STATE_COLLECTION =os.getenv("MARATHON_STATE_COLLECTION", "marathon_state")
+SETTINGS_COLLECTION=os.getenv("SETTINGS_COLLECTION", "settings")
+TEAMS_COLLECTION =os.getenv("TEAMS_COLLECTION ", "teams")
+UNREGISTERED_MEMBERS_COLLECTION=os.getenv("UNREGISTERED_MEMBERS_COLLECTION", "unregistered_members")
 
 # --- Scoring Engine Parameters ---
 PERFECT_MATCH_THRESHOLD=float(os.getenv("PERFECT_MATCH_THRESHOLD", 0.95))

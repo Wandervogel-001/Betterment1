@@ -13,8 +13,8 @@ import google.generativeai as genai
 
 # --- Configuration Imports ---
 from config import (
-    HUGGINGFACE_API_TOKEN, POE_API_KEY, GOOGLE_API_KEY,
-    HUGGINGFACE_MODELS, POE_MODELS, GOOGLE_MODELS, ACTIVE_AI_MODEL
+    HUGGINGFACE_API_TOKEN, POE_API_KEY, GOOGLE_API_KEY, DEEPSEEK_API_KEY, OPENROUTER_API_KEY,
+    HUGGINGFACE_MODELS, POE_MODELS, GOOGLE_MODELS, DEEPSEEK_MODELS, OPENROUTER_MODELS,
 )
 from ..utils.timezone_utils import TimezoneProcessor
 
@@ -69,43 +69,51 @@ class AIExtractionError(AIHandlerError): pass
 class AIHandler:
     """
     Handles AI operations by dispatching to the appropriate API
-    based on the configured active model.
+    based on the configured active model for a given guild.
     """
 
-    def __init__(self):
-        self.active_model = ACTIVE_AI_MODEL
-        self.api_provider = None
-        self.client = None
-
-        if self.active_model in HUGGINGFACE_MODELS:
-            self.api_provider = "huggingface"
-            if not HUGGINGFACE_API_TOKEN:
-                raise ValueError("HUGGINGFACE_API_TOKEN is not set for the active Hugging Face model.")
-            self.client = InferenceClient(token=HUGGINGFACE_API_TOKEN)
-            logger.info(f"AIHandler initialized with Hugging Face provider for model: {self.active_model}")
-
-        elif self.active_model in POE_MODELS:
-            self.api_provider = "poe"
-            if not POE_API_KEY:
-                raise ValueError("POE_API_KEY is not set for the active Poe model.")
-            self.client = openai.OpenAI(api_key=POE_API_KEY, base_url="https://api.poe.com/v1")
-            logger.info(f"AIHandler initialized with Poe provider for model: {self.active_model}")
-
-        elif self.active_model in GOOGLE_MODELS:
-            self.api_provider = "google"
-            if not GOOGLE_API_KEY:
-                raise ValueError("GOOGLE_API_KEY is not set for the active Google model.")
-            genai.configure(api_key=GOOGLE_API_KEY)
-            self.client = genai
-            logger.info(f"AIHandler initialized with Google provider for model: {self.active_model}")
-
-        else:
-            raise ValueError(f"The active model '{self.active_model}' is not configured in any of the model lists.")
-
+    def __init__(self, db: Any):
+        """AIHandler is now guild-agnostic at initialization."""
+        self.db = db
         self.similarity_calculator = SimilarityCalculator()
+        self._client_cache: Dict[str, Any] = {} # Cache for API clients
+
+    async def _get_client_for_guild(self, guild_id: int) -> tuple[Any, str]:
+        """
+        Loads the active model for a specific guild and returns the
+        appropriate, cached API client and the model name.
+        """
+        active_model = await self.db.get_active_ai_model(guild_id)
+
+        if active_model in self._client_cache:
+            return self._client_cache[active_model], active_model
+
+        client = None
+        if active_model in HUGGINGFACE_MODELS:
+            if not HUGGINGFACE_API_TOKEN: raise ValueError("HUGGINGFACE_API_TOKEN is not set.")
+            client = InferenceClient(token=HUGGINGFACE_API_TOKEN)
+        elif active_model in POE_MODELS:
+            if not POE_API_KEY: raise ValueError("POE_API_KEY is not set.")
+            client = openai.OpenAI(api_key=POE_API_KEY, base_url="https://api.poe.com/v1")
+        elif active_model in GOOGLE_MODELS:
+            if not GOOGLE_API_KEY: raise ValueError("GOOGLE_API_KEY is not set.")
+            genai.configure(api_key=GOOGLE_API_KEY)
+            client = genai
+        elif active_model in DEEPSEEK_MODELS:
+            if not DEEPSEEK_API_KEY: raise ValueError("DEEPSEEK_API_KEY is not set.")
+            client = openai.OpenAI(api_key=DEEPSEEK_API_KEY, base_url="https://api.deepseek.com/v1")
+        elif active_model in OPENROUTER_MODELS:
+            if not OPENROUTER_API_KEY: raise ValueError("OPENROUTER_API_KEY is not set.")
+            client = openai.OpenAI(api_key=OPENROUTER_API_KEY, base_url="https://openrouter.ai/api/v1")
+        else:
+            raise ValueError(f"Active model '{active_model}' is not configured for guild {guild_id}.")
+
+        logger.info(f"Initialized API client for model: {active_model}")
+        self._client_cache[active_model] = client
+        return client, active_model
+
 
     def _build_profile_prompt(self, profile_text: str) -> str:
-        """Builds the dynamic prompt for the AI model."""
         valid_timezones = ", ".join(f'"{tz}"' for tz in TimezoneProcessor.TIMEZONE_MAP.keys())
         return f"""
         You are an AI assistant that extracts structured data from user-written profile introductions.
@@ -134,20 +142,24 @@ class AIHandler:
         wait=tenacity.wait_exponential(multiplier=1, min=4, max=10),
         reraise=True
     )
-    async def extract_profile_data(self, text: str) -> Optional[Dict]:
-        """Extracts structured data by calling the appropriate AI provider."""
+    async def extract_profile_data(self, text: str, guild_id: int) -> Optional[Dict]:
+        """Extracts structured data by calling the appropriate AI provider for the guild."""
         if len(text) < 20:
             logger.warning("Profile text too short for meaningful extraction.")
             return None
 
+        client, active_model = await self._get_client_for_guild(guild_id)
         prompt = self._build_profile_prompt(text)
         try:
-            if self.api_provider == "huggingface":
-                raw_response = await self._call_huggingface(prompt)
-            elif self.api_provider == "poe":
-                raw_response = await self._call_poe(prompt)
-            elif self.api_provider == "google":
-                raw_response = await self._call_google(prompt)
+            raw_response = ""
+            api_provider = self._get_provider_from_model(active_model)
+
+            if api_provider == "huggingface":
+                raw_response = await self._call_huggingface(client, active_model, prompt)
+            elif api_provider in ["poe", "deepseek", "openrouter"]:
+                raw_response = await self._call_openai_compatible(client, active_model, prompt)
+            elif api_provider == "google":
+                raw_response = await self._call_google(client, active_model, prompt)
             else:
                 raise AIHandlerError("No valid AI provider configured.")
 
@@ -159,35 +171,41 @@ class AIHandler:
             logger.error(f"An unexpected error occurred during profile extraction: {e}")
             raise AIExtractionError(f"Profile extraction failed: {str(e)}") from e
 
-    async def _call_huggingface(self, prompt: str) -> str:
-        """Makes an API call to the Hugging Face Inference API."""
+    def _get_provider_from_model(self, model_name: str) -> str:
+        """Helper to determine the provider from the model name."""
+        if model_name in HUGGINGFACE_MODELS: return "huggingface"
+        if model_name in POE_MODELS: return "poe"
+        if model_name in GOOGLE_MODELS: return "google"
+        if model_name in DEEPSEEK_MODELS: return "deepseek"
+        if model_name in OPENROUTER_MODELS: return "openrouter"
+        return "unknown"
+
+    async def _call_huggingface(self, client: InferenceClient, model: str, prompt: str) -> str:
         loop = asyncio.get_event_loop()
         completion = await loop.run_in_executor(
             None,
-            lambda: self.client.chat_completion(
+            lambda: client.chat_completion(
                 messages=[{"role": "user", "content": prompt}],
-                model=self.active_model,
+                model=model,
                 temperature=0.2,
                 max_tokens=512
             )
         )
         return completion.choices[0].message.content.strip()
 
-    async def _call_poe(self, prompt: str) -> str:
-        """Makes an API call to the Poe API."""
+    async def _call_openai_compatible(self, client: openai.OpenAI, model: str, prompt: str) -> str:
         loop = asyncio.get_event_loop()
         chat = await loop.run_in_executor(
             None,
-            lambda: self.client.chat.completions.create(
-                model=self.active_model,
+            lambda: client.chat.completions.create(
+                model=model,
                 messages=[{"role": "user", "content": prompt}],
             )
         )
         return chat.choices[0].message.content
 
-    async def _call_google(self, prompt: str) -> str:
-        """Makes an API call to the Google Gemini API."""
-        model = self.client.GenerativeModel(self.active_model)
+    async def _call_google(self, client: Any, model_name: str, prompt: str) -> str:
+        model = client.GenerativeModel(model_name)
         loop = asyncio.get_event_loop()
         response = await loop.run_in_executor(
             None,
@@ -196,7 +214,6 @@ class AIHandler:
         return response.text
 
     def _parse_ai_response(self, raw: str) -> Dict:
-        """Cleans and parses the JSON response from the AI."""
         cleaned = re.sub(r"```json\n?|```", "", raw).strip()
         data = json.loads(cleaned)
         if not isinstance(data, dict):
